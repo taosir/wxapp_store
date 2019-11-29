@@ -19,8 +19,9 @@
 * 活跃用户跟踪<br><br>
 
 ## 二、功能展示<br>
-![demogif](https://github.com/taosir/wxapp_store/blob/master/_github_image/1_1.jpg) <br>
-- 更多功能展示可以在`_github_image`中查看.<br>
+![wxapp_home](https://github.com/taosir/wxapp_store/blob/master/_github_image/1_1.jpg) <br>
+- 更多图片展示可以在`_github_image`中查看.<br>
 
 ## 三、实际体验
-![demogif](https://github.com/taosir/wxapp_store/blob/master/_github_image/share.jpg) <br>
+![wxapp_qrcode](https://github.com/taosir/wxapp_store/blob/master/_github_image/share.jpg) <br>
+- 用微信扫描上图二维码体验.<br>
