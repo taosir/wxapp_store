@@ -7,7 +7,7 @@
 - 快递跟踪<br>
 - 上门自提<br>
 - 售后退款<br>
-- 活跃用户跟踪<br><br>
+- 活跃用户跟踪<br>
 - **积分功能**<br>
 - **三级分销功能**<br>
 - **股东分销功能**<br>
@@ -16,7 +16,7 @@
 - **整点秒杀**<br>
 - **超值拼团**<br>
 - **好友砍价**<br>
-- **每日签到**<br>
+- **每日签到**<br><br>
 
 ## 二、功能展示<br>
 ![wxapp_home](https://github.com/taosir/wxapp_store/blob/master/_github_image/1_1.jpg) <br>
