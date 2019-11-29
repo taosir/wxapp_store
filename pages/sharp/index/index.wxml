@@ -1,0 +1,111 @@
+<view wx:if="{{ tabbar.length }}" class="container">
+  <!-- 商品分类tab -->
+  <view class="sharp-tabs">
+    <scroll-view scroll-x="{{ true }}" scroll-left="{{ true }}">
+      <form bindsubmit="onToggleTab" report-submit="true">
+        <view class="sharp-tabs--container dis-flex">
+          <button wx:for="{{ tabbar }}" wx:key="this" formType="submit" class="btn-normal" data-index="{{ index }}">
+            <view class="tabs-item {{ curTabIndex == index ? 'active' : '' }} dis-flex flex-dir-column flex-x-center flex-y-center">
+              <block wx:if="{{ item.status == StateEnum.ACTIVE_STATE_NOTICE.value }}">
+                <view class="item-title">{{ item.status_text }}</view>
+              </block>
+              <block wx:else>
+                <view class="item-time">{{ item.active_time }}</view>
+                <view class="item-status">{{ item.status_text }}</view>
+              </block>
+            </view>
+          </button>
+        </view>
+      </form>
+      <view class="sharp-tabs--empty"></view>
+    </scroll-view>
+  </view>
+  <!-- 秒杀活动 -->
+  <view class="sharp-active dis-flex flex-dir-column flex-y-center">
+    <!-- 活动状态 -->
+    <view class="active-status">
+      <text class="active-status--icon iconfont icon-artboard"></text>
+      <text class="active-status--time" wx:if="{{ tabbar[curTabIndex].status != StateEnum.ACTIVE_STATE_NOTICE.value }}">{{ tabbar[curTabIndex].active_time }}</text>
+      <text class="active-status--text">{{ tabbar[curTabIndex].status_text2 }}</text>
+    </view>
+    <!-- 倒计时 -->
+    <view class="active--count-down dis-flex flex-y-center">
+      <view class="clock-text">
+        <text>{{ tabbar[curTabIndex].status == StateEnum.ACTIVE_STATE_BEGIN.value ? '距结束' : '距开始' }}</text>
+      </view>
+      <view class="clock dis-flex">
+        <view class="clock-time">
+          <text>{{ countDownList[0].dynamic.hou }}</text>
+        </view>
+        <view class="clock-symbol">
+          <text>:</text>
+        </view>
+        <view class="clock-time">
+          <text>{{ countDownList[0].dynamic.min }}</text>
+        </view>
+        <view class="clock-symbol">
+          <text>:</text>
+        </view>
+        <view class="clock-time">
+          <text>{{ countDownList[0].dynamic.sec }}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 内容区域 -->
+  <view class="bargain-hall">
+    <!-- 商品列表 -->
+    <view class="goods-item" wx:for="{{ goodsList.data }}" wx:key="this">
+      <form bindsubmit="onTargetActive" report-submit="true">
+        <button formType="submit" class="btn-normal" data-id="{{ item.sharp_goods_id }}">
+          <view class="goods-item--container dis-flex">
+            <!-- 商品图片 -->
+            <view class="goods-image">
+              <image src="{{ item.goods_image }}"></image>
+            </view>
+            <view class="goods-info">
+              <!-- 商品名称 -->
+              <view class="goods-name">
+                <text class="twolist-hidden">{{ item.goods_name }}</text>
+              </view>
+              <!-- 秒杀进度条 -->
+              <view class="sharp-progress dis-flex flex-y-center">
+                <view class="yoo-progress">
+                  <view class="yoo-progress--portion" style="width: {{ item.progress }}%;">
+                  </view>
+                  <text class="yoo-progress--text">{{ item.progress }}%</text>
+                </view>
+                <view class="sharp-sales">已抢{{ item.sales_actual }}件</view>
+              </view>
+              <!-- 秒杀活动价格 -->
+              <view class="sharp-price dis-flex flex-y-end">
+                <view class="seckill-price">
+                  <text class="f-24">￥</text>
+                  <text class="money">{{ item.goods_sku.seckill_price }}</text>
+                </view>
+                <view class="original-price">
+                  <text class="f-24">￥</text>
+                  <text class="money">{{ item.goods_sku.original_price }}</text>
+                </view>
+              </view>
+              <!-- 操作按钮 -->
+              <view class="opt-touch">
+                <view class="touch-btn">
+                  <text>{{ tabbar[curTabIndex].status == StateEnum.ACTIVE_STATE_BEGIN.value ? '马上抢' : '查看商品' }}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </button>
+      </form>
+    </view>
+    <view wx:if="{{ noMore }}" class="no-more f-28">亲, 没有更多了</view>
+    <!-- 无数据提供的页面 -->
+    <view wx:if="{{ !isLoading && !goodsList.data.length }}">
+      <view class="no-content">
+        <text class="iconfont icon-meiyougengduo"></text>
+        <text class="cont">亲，暂无秒杀商品哦</text>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,5 @@
+<view class="container">
+  <view class="qrcode">
+    <image mode="widthFix" src="{{ qrcode }}" catchtap="previewImage"></image>
+  </view>
+</view>

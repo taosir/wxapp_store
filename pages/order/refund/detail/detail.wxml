@@ -1,0 +1,150 @@
+<view wx:if="{{ detail.order_refund_id }}" class="container p-bottom">
+
+  <!-- 顶部状态栏 -->
+  <view class="detail-header dis-flex flex-y-center">
+    <view class="header-backdrop">
+      <image src="/images/refund-bg.png"></image>
+    </view>
+    <view class="header-state">
+      <text class="f-32 col-f">{{ detail.state_text }}</text>
+    </view>
+  </view>
+
+  <!-- 商品详情 -->
+  <form bindsubmit="onGoodsDetail" report-submit="true">
+    <button class="btn-normal" formType="submit" data-id="{{ detail.order_goods.goods_id }}">
+      <view class="detail-goods b-f m-top20 dis-flex flex-dir-row">
+        <view class="left">
+          <image class="goods-image" src="{{ detail.order_goods.image.file_path }}"></image>
+        </view>
+        <view class="right dis-flex flex-box flex-dir-column flex-x-around">
+          <view class="goods-name">
+            <text class="twolist-hidden">{{ detail.order_goods.goods_name }}</text>
+          </view>
+          <view class="dis-flex col-9 f-24">
+            <view class="flex-box">{{ detail.order_goods.goods_attr }}</view>
+            <text class="t-r">×{{ detail.order_goods.total_num }}</text>
+          </view>
+        </view>
+      </view>
+    </button>
+  </form>
+
+  <!-- 商品金额 -->
+  <view class="detail-order b-f row-block">
+    <view class="item dis-flex flex-x-end flex-y-center">
+      <text class="">商品金额：</text>
+      <text class="col-m">￥{{ detail.order_goods.total_pay_price }}</text>
+    </view>
+    <view class="item dis-flex flex-x-end flex-y-center">
+      <text class="">订单实付金额：</text>
+      <text class="col-m">￥{{ detail.order_master.pay_price }}</text>
+    </view>
+  </view>
+
+  <!-- 已退款金额 -->
+  <view wx:if="{{ detail.status.value == 20 && detail.type.value == 10 }}" class="detail-order b-f row-block dis-flex flex-x-end flex-y-center">
+    <text class="">已退款金额：</text>
+    <text class="col-m">￥{{ detail.refund_money }}</text>
+  </view>
+
+  <!-- 售后信息 -->
+  <view class="detail-refund b-f m-top20">
+    <view class="detail-refund__row dis-flex">
+      <view class="text">
+        <text>售后类型：</text>
+      </view>
+      <view class="flex-box">
+        <text>{{ detail.type.text }}</text>
+      </view>
+    </view>
+    <view class="detail-refund__row dis-flex">
+      <view class="text">
+        <text>申请原因：</text>
+      </view>
+      <view class="flex-box">
+        <text>{{ detail.apply_desc }}</text>
+      </view>
+    </view>
+    <view wx:if="{{ detail.image.length > 0 }}" class="detail-refund__row dis-flex">
+      <view class="text">
+        <text>申请凭证：</text>
+      </view>
+      <view class="image-list flex-box">
+        <view class="image-preview" wx:for="{{ detail.image }}" wx:key="this">
+          <image mode="aspectFill" src="{{ item.file_path }}" catchtap="previewImages" data-index="{{ index }}"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 售后信息 -->
+  <view wx:if="{{ detail.status.value == 10 }}" class="detail-refund b-f m-top20">
+    <view class="detail-refund__row dis-flex">
+      <view class="text">
+        <text class="col-m">拒绝原因：</text>
+      </view>
+      <view class="flex-box">
+        <text>{{ detail.refuse_desc }}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 商家收货地址 -->
+  <view wx:if="{{ detail.is_agree.value == 10 }}" class="detail-address b-f m-top20">
+    <view class="detail-address__row address-title">
+      <text class="f-30 col-m">退货地址</text>
+    </view>
+    <view class="detail-address__row address-details">
+      <view class="address-details__row">
+        <text>收货人：　{{ detail.address.name }}</text>
+      </view>
+      <view class="address-details__row">
+        <text>联系电话：{{ detail.address.phone }}</text>
+      </view>
+      <view class="address-details__row dis-flex">
+        <view class="text">
+          <text>详细地址：</text>
+        </view>
+        <view class="flex-box">
+          <text>{{ detail.address.detail }}</text>
+        </view>
+      </view>
+    </view>
+    <view class="detail-address__row">
+      <view class="f-26 col-9">
+        <text>· 未与卖家协商一致情况下，请勿寄到付或平邮</text>
+      </view>
+      <view class="f-26 col-9">
+        <text>· 请填写真实有效物流信息</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 填写物流信息 -->
+  <form wx:if="{{ detail.type.value == 10 && detail.is_agree.value == 10 && detail.is_user_send == 0 }}" bindsubmit="onSubmit" report-submit>
+    <view class="detail-express b-f m-top20">
+      <view class="form-group dis-flex flex-y-center">
+        <view class="field">物流公司：</view>
+        <view class="flex-box">
+          <picker mode="selector" bindchange="onExpressChange" range="{{ expressList }}" range-key="express_name" name="express_id" value="{{ expressList[expressIndex].express_id }}">
+            <text wx:if="{{ expressIndex > -1 }}">{{ expressList[expressIndex].express_name }}</text>
+            <text wx:else class="col-80">请选择物流公司</text>
+          </picker>
+        </view>
+      </view>
+      <view class="form-group dis-flex flex-y-center">
+        <view class="field">物流单号：</view>
+        <view class="flex-box">
+          <input placeholder="请填写物流单号" name="express_no"></input>
+        </view>
+      </view>
+    </view>
+
+    <!-- 确认发货 -->
+    <view class="padding-box profile-btn">
+      <button formType="submit" disabled="{{ disabled }}">确认发货</button>
+    </view>
+  </form>
+
+</view>

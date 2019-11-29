@@ -1,0 +1,56 @@
+<view class="container" wx:if="{{ total.all > 0 }}">
+  <!-- 顶部选项卡 -->
+  <view class="swiper-tab dis-flex box-align-center flex-y-center">
+    <view class="swiper-tab-item {{options.scoreType == -1 ? 'on' : ''}}" data-current="-1" bindtap="swichNav">全部 ({{ total.all }})</view>
+    <view class="swiper-tab-item {{options.scoreType == 10 ? 'on' : ''}}" data-current="10" bindtap="swichNav">好评 ({{ total.praise }})</view>
+    <view class="swiper-tab-item {{options.scoreType == 20 ? 'on' : ''}}" data-current="20" bindtap="swichNav">中评 ({{ total.review }})</view>
+    <view class="swiper-tab-item {{options.scoreType == 30 ? 'on' : ''}}" data-current="30" bindtap="swichNav">差评 ({{ total.negative }})</view>
+  </view>
+
+  <!-- 评价列表 -->
+  <scroll-view scroll-y="{{ true }}" bindscrolltolower="bindDownLoad" style="height: {{swiperHeight}}px;">
+    <view class="comment-list" wx:if="{{ list.data.length }}">
+      <view class="comment-item" wx:for="{{ list.data }}" wx:key="this">
+        <view class="goods-comment-box dis-flex flex-dir-column b-f b-b">
+          <view class="row dis-flex flex-y-center">
+            <!-- 用户信息 -->
+            <view class="user dis-flex flex-y-center">
+              <image class="user_avatar" mode="aspectFill" src="{{ item.user.avatarUrl }}"></image>
+              <text class="user_name f-26">{{ item.user.nickName }}</text>
+            </view>
+            <!-- 评价评星 -->
+            <view class="com_xing dis-flex flex-y-center">
+              <text class="iconfont icon-shoucang active"></text>
+              <block wx:if="{{ item.score < 30 }}">
+                <text class="iconfont icon-shoucang active"></text>
+                <text class="iconfont icon-shoucang active"></text>
+              </block>
+              <block wx:if="{{ item.score < 20 }}">
+                <text class="iconfont icon-shoucang active"></text>
+                <text class="iconfont icon-shoucang active"></text>
+              </block>
+            </view>
+            <!-- 评价日期-->
+            <view class="flex-box f-22 col-9 t-r">{{ item.create_time }}</view>
+          </view>
+          <!-- 评价内容 -->
+          <view class="goods-comment-cont row m-top20">
+            <text class="f-26">{{ item.content }}</text>
+          </view>
+          <!-- 评价图片 -->
+          <view class="comment-images row" wx:if="{{ item.image.length }}">
+            <view class="image-preview" wx:for="{{ item.image }}" wx:for-item="image" wx:for-index="imgIndex" wx:key="this">
+              <image data-comment-index="{{ index }}" data-img-index="{{ imgIndex }}" catchtap="previewImages" mode="aspectFill" src="{{ image.file_path }}"></image>
+            </view>
+          </view>
+          <!-- 商品规格 -->
+          <view class="row f-24 col-9">{{ item.order_goods.goods_attr }}</view>
+        </view>
+      </view>
+    </view>
+    <view class="no-content" wx:elif="{{ notcont }}">
+      <text class="iconfont icon-meiyougengduo"></text>
+      <text class="cont">亲，暂时没有记录哦</text>
+    </view>
+  </scroll-view>
+</view>

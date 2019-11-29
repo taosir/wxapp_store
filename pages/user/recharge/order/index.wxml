@@ -1,0 +1,25 @@
+<view class="container">
+
+  <view class="recharge-order">
+    <scroll-view bindscrolltolower="bindDownLoad" scroll-y style="height: {{ scrollHeight }}px">
+      <view wx:for="{{ list.data }}" wx:key="this" class="order-item dis-flex flex-x-between flex-y-center">
+        <view class="item-left">
+          <view class="rec-status">
+            <text>充值成功</text>
+          </view>
+          <view class="rec-time">
+            <text>{{ item.pay_time.text }}</text>
+          </view>
+        </view>
+        <view class="item-right">
+          <text>+{{ item.actual_money }}元</text>
+        </view>
+      </view>
+      <!-- 没有记录 -->
+      <view class="no-content" wx:if="{{ !list.data.length && !isLoading }}">
+        <text class="iconfont icon-meiyougengduo"></text>
+        <text class="cont">亲，暂无充值记录哦</text>
+      </view>
+    </scroll-view>
+  </view>
+</view>

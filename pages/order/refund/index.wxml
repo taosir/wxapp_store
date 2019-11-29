@@ -1,0 +1,57 @@
+<view class="container">
+  <!-- 顶部选项卡 -->
+  <view class="swiper-tab dis-flex flex-x-around flex-y-center">
+    <block wx:for="{{ tabList }}" wx:key="this">
+      <view class="swiper-tab-item {{ dataType == item.value ? 'on' : ''}}" data-current="{{ item.value }}" bindtap="swichNav">{{ item.text }}</view>
+    </block>
+  </view>
+  <!-- 退款/售后单 -->
+  <scroll-view scroll-y="{{ true }}" bindscrolltolower="triggerDownLoad" style="height: {{swiperHeight}}px;">
+    <view class="widget-list" wx:if="{{ list.data.length }}">
+      <view class="widget-detail" wx:for="{{ list.data }}" wx:key="this" catchtap="triggerDetail" data-id="{{ item.order_refund_id }}">
+        <view class="row-block dis-flex flex-y-center">
+          <view class="flex-box">{{ item.create_time }}</view>
+          <view class="flex-box t-r">
+            <text class="col-m">{{ item.state_text }}</text>
+          </view>
+        </view>
+        <view class="detail-goods row-block dis-flex">
+          <view class="goods-image">
+            <image src="{{ item.order_goods.image.file_path }}" mode="aspectFit"></image>
+          </view>
+          <view class="goods-right flex-box">
+            <view class="goods-name">
+              <text class="twolist-hidden">{{ item.order_goods.goods_name }}</text>
+            </view>
+            <view class="goods-attr">
+              <text class="f-26 col-8">{{ item.order_goods.goods_attr }}</text>
+            </view>
+            <view class="goods-num t-r">
+              <text class="f-26 col-8">×{{ item.order_goods.total_num }}</text>
+            </view>
+          </view>
+        </view>
+        <view class="detail-order row-block">
+          <view class="item dis-flex flex-x-end flex-y-center">
+            <text class="">商品金额：</text>
+            <text class="col-m">￥{{ item.order_goods.total_pay_price }}</text>
+          </view>
+          <view class="item dis-flex flex-x-end flex-y-center">
+            <text class="">订单实付金额：</text>
+            <text class="col-m">￥{{ item.order_master.pay_price }}</text>
+          </view>
+        </view>
+        <view class="detail-operate row-block dis-flex flex-x-end flex-y-center">
+          <view class="detail-btn btn-detail" catchtap="triggerDetail" data-id="{{ item.order_refund_id }}">查看详情</view>
+        </view>
+      </view>
+      <!-- 没有更多 -->
+      <view wx:if="{{ list.data.length && !isLoading && no_more }}" class="no-more f-30">亲, 没有更多了</view>
+    </view>
+    <!-- 没有记录 -->
+    <view class="no-content" wx:if="{{ !list.data.length && !isLoading }}">
+      <text class="iconfont icon-meiyougengduo"></text>
+      <text class="cont">亲，暂无退款/售后单哦</text>
+    </view>
+  </scroll-view>
+</view>

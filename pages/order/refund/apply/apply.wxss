@@ -1,0 +1,133 @@
+.container {
+  font-size: 28rpx;
+}
+
+.row-title {
+  color: #888;
+  margin-bottom: 20rpx;
+}
+
+.goods-detail {
+  padding: 24rpx 20rpx;
+}
+
+.goods-detail .left .goods-image {
+  display: block;
+  width: 150rpx;
+  height: 150rpx;
+}
+
+.goods-detail .right {
+  padding-left: 20rpx;
+}
+
+/* 服务类型 */
+
+.row-service {
+  padding: 24rpx 20rpx;
+}
+
+.service-switch .switch-item {
+  height: 38rpx;
+  line-height: 38rpx;
+  padding: 10rpx 30rpx;
+  margin-right: 25rpx;
+  border-radius: 10rpx;
+  border: 1px solid rgb(177, 177, 177);
+  color: #888;
+}
+
+.service-switch .switch-item.active {
+  color: #fc1e56;
+  border: 1px solid #fc1e56;
+}
+
+/* 申请原因 */
+
+.row-textarea {
+  padding: 24rpx 20rpx;
+}
+
+.row-textarea textarea {
+  width: 100%;
+  height: 220rpx;
+  padding: 12rpx;
+  border: 1rpx solid #e8e8e8;
+  border-radius: 5rpx;
+  box-sizing: border-box;
+}
+
+/* 退款金额 */
+
+.row-money {
+  padding: 24rpx 20rpx;
+}
+
+.row-money .row-title {
+  margin-bottom: 0;
+  margin-right: 30rpx;
+}
+
+/* 上传凭证 */
+
+.row-voucher {
+  padding: 24rpx 20rpx;
+}
+
+.row-voucher .image-list:after {
+  clear: both;
+  content: " ";
+  display: table;
+}
+
+.row-voucher .image-list image {
+  display: block;
+  width: 150rpx;
+  height: 150rpx;
+}
+
+.row-voucher .image-list .image-picker {
+  width: 150rpx;
+  height: 150rpx;
+  border: 1rpx dashed #ccc;
+  color: #ccc;
+}
+
+.row-voucher .image-list .image-picker .choose__icon {
+  font-size: 56rpx;
+  margin-bottom: 6rpx;
+}
+
+.row-voucher .image-list .image-picker .choose__text {
+  font-size: 22rpx;
+}
+
+.row-voucher .image-list .image-picker, .image-list .image-preview {
+  margin: 15rpx 30rpx 15rpx 0;
+  float: left;
+}
+
+.row-voucher .image-list .image-picker:nth-child(4n+0),
+.row-voucher .image-list .image-preview:nth-child(4n+0) {
+  margin-right: 0;
+}
+
+.row-voucher .image-list .image-preview {
+  position: relative;
+}
+
+.row-voucher .image-list .image-preview .image-delete {
+  position: absolute;
+  top: -15rpx;
+  right: -15rpx;
+  height: 42rpx;
+  width: 42rpx;
+  line-height: 42rpx;
+  background: rgba(0, 0, 0, 0.64);
+  border-radius: 50%;
+  color: #fff;
+  font-weight: bolder;
+  font-size: 22rpx;
+  z-index: 10;
+  text-align: center;
+}

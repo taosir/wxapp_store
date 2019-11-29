@@ -1,0 +1,1 @@
+Component({ options: { addGlobalClass: true, }, properties: { itemIndex: String, params: Object, dataList: Object }, methods: { onTargetDetail(e) { wx.navigateTo({ url: '/pages/article/detail/index?article_id=' + e.currentTarget.dataset.id }) }, } })

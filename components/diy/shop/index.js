@@ -1,0 +1,1 @@
+const App = getApp(); Component({ options: { addGlobalClass: true, }, properties: { itemIndex: String, itemStyle: Object, dataList: Object }, methods: { _onTargetDetail(e) { App.saveFormId(e.detail.formId); wx.navigateTo({ url: '/pages/shop/detail/index?shop_id=' + e.detail.target.dataset.id, }) }, } })

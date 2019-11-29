@@ -1,0 +1,63 @@
+<view class="container p-bottom" wx:if="{{ goodsList.length && formData.length }}">
+  <view class="goods-list">
+    <view class="goods-item" wx:for="{{ goodsList }}" wx:key="this">
+
+      <!-- 商品详情 -->
+      <view class="goods-detail dis-flex flex-dir-row">
+        <view class="left">
+          <image class="goods-image" src="{{ item.image.file_path }}"></image>
+        </view>
+        <view class="right dis-flex flex-box flex-dir-column flex-x-around">
+          <text class="twolist-hidden">{{ item.goods_name }}</text>
+          <text class="">￥{{ item.goods_price }}</text>
+        </view>
+      </view>
+
+      <!-- 选择评价 -->
+      <view class="score-row dis-flex flex-x-around">
+        <view bindtap="setScore" class="score-item score__praise dis-flex flex-y-center flex-x-center {{formData[index].score==10?'__active':''}}" data-index="{{index}}" data-score="10">
+          <view class="score">
+            <text class="score__icon iconfont icon-haoping"></text>
+            <text class="score__text">好评</text>
+          </view>
+        </view>
+        <view bindtap="setScore" class="score-item score__review dis-flex flex-y-center flex-x-center {{formData[index].score==20?'__active':''}}" data-index="{{index}}" data-score="20">
+          <view class="score">
+            <text class="score__icon iconfont icon-zhongping"></text>
+            <text class="score__text">中评</text>
+          </view>
+        </view>
+        <view bindtap="setScore" class="score-item score__negative dis-flex flex-y-center flex-x-center {{formData[index].score==30?'__active':''}}" data-index="{{index}}" data-score="30">
+          <view class="score">
+            <text class="score__icon iconfont icon-chaping"></text>
+            <text class="score__text">差评</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 评价内容 -->
+      <view class="dis-flex content-row">
+        <textarea bindinput="contentInput" data-index="{{index}}" maxlength="2000" placeholder="请输入评价内容 (留空则不评价)" placeholderStyle="color:#ccc"></textarea>
+      </view>
+
+      <!-- 图片列表 -->
+      <view class="image-list">
+        <view class="image-preview" wx:for="{{formData[index].image_list}}" wx:for-index="imageIndex" wx:for-item="imagePath" wx:key="this">
+          <text class="image-delete iconfont icon-shanchu" catchtap="deleteImage" data-index="{{index}}" data-image-index="{{imageIndex}}"></text>
+          <image mode="aspectFill" src="{{ imagePath }}"></image>
+        </view>
+        <view bindtap="chooseImage" class="image-picker dis-flex flex-dir-column flex-x-center flex-y-center" data-index="{{index}}" wx:if="{{ !formData[index].image_list || formData[index].image_list.length < 6 }}">
+          <text class="choose__icon iconfont icon-tubiao_xiangji"></text>
+          <text class="choose__text">上传图片</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="flow-fixed-footer b-f">
+    <view class="flow-btn f-32">
+      <view catchtap="submit">确认提交</view>
+    </view>
+  </view>
+
+</view>

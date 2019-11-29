@@ -1,0 +1,45 @@
+<view wx:if="{{ detail.shop_id }}" class="container">
+  <view class="header">
+    <view class="shop-logo">
+      <image src="{{ detail.logo.file_path }}"></image>
+    </view>
+    <view class="shop-name">
+      <text>{{ detail.shop_name }}</text>
+    </view>
+    <view wx:if="{{ detail.summary }}" class="shop-summary dis-flex">
+      <text>门店简介：{{ detail.summary }}</text>
+    </view>
+  </view>
+  <view class="content">
+    <view class="content-item dis-flex flex-y-center">
+      <view class="content-item__icon dis-flex">
+        <text class="iconfont icon-shijian"></text>
+      </view>
+      <view class="content-item__text flex-box dis-flex">
+        <text class="f-26">{{ detail.shop_hours }}</text>
+      </view>
+    </view>
+    <view catchtap="onOpenLocation" class="content-item dis-flex flex-y-center">
+      <view class="content-item__icon dis-flex">
+        <text class="iconfont icon-dingwei"></text>
+      </view>
+      <view class="content-item__text flex-box dis-flex">
+        <text class="f-26">{{detail.region.province}}{{detail.region.city}}{{detail.region.region}}{{detail.address}}</text>
+      </view>
+      <view class="content-item__arrow dis-flex">
+        <text class="iconfont icon-xiangyoujiantou user-orderJtou"></text>
+      </view>
+    </view>
+    <view catchtap="onMakePhoneCall" class="content-item dis-flex flex-y-center">
+      <view class="content-item__icon dis-flex">
+        <text class="iconfont icon-dianhua"></text>
+      </view>
+      <view class="content-item__text flex-box dis-flex">
+        <text class="f-26">{{ detail.phone }}</text>
+      </view>
+      <view class="content-item__arrow dis-flex">
+        <text class="iconfont icon-xiangyoujiantou user-orderJtou"></text>
+      </view>
+    </view>
+  </view>
+</view>

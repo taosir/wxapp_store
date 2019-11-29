@@ -1,0 +1,39 @@
+<view class="container b-f">
+  <view class="shop-list">
+    <view wx:for="{{ shopList }}" wx:key="this" catchtap="onSelectedShop" data-id="{{ item.shop_id }}" class="shop-item dis-flex flex-y-center">
+      <view class="shop-item__content flex-box">
+        <view class="shop-item__title">
+          <text>{{ item.shop_name }}</text>
+        </view>
+        <view class="shop-item__address">
+          <text>地址：{{ item.region.province }}{{ item.region.city }}{{ item.region.region }}{{ item.address }}</text>
+        </view>
+        <view class="shop-item__phone">
+          <text>联系电话：{{ item.phone }}</text>
+        </view>
+        <view class="shop-item__distance">
+          <block wx:if="{{ item.distance }}">
+            <text class="iconfont icon-dingwei"></text>
+            <text class="f-24">{{ item.distance_unit }}</text>
+          </block>
+        </view>
+      </view>
+      <!-- 选中状态 -->
+      <view wx:if="{{ item.shop_id == selectedId }}" class="shop-item__right">
+        <text class="iconfont icon-iconfontduihaocopy"></text>
+      </view>
+    </view>
+  </view>
+  <!-- 无数据提供的页面 -->
+  <view wx:if="{{ !isLoading && !shopList.length }}">
+    <view class="no-content">
+      <text class="iconfont icon-wushuju"></text>
+      <text class="cont">亲，暂无自提门店哦</text>
+    </view>
+  </view>
+  <!-- 定位按钮 -->
+  <view wx:if="{{ !isAuthor }}" class="widget-location dis-flex flex-x-center flex-y-center" catchtap="onAuthorize">
+    <text class="iconfont icon-locate"></text>
+  </view>
+</view>
+<zan-toptips id="zan-toptips" content="{{ content }}" />

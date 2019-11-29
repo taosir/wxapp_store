@@ -1,0 +1,5 @@
+<!-- 视频组 -->
+<view class="diy-video" style="padding: {{ itemStyle.paddingTop }}px 0;">
+  <video class="video" style="height: {{ itemStyle.height }}px;" src="{{ params.videoUrl }}" poster="{{ params.poster }}" autoplay="{{ params.autoplay == 1 }}" custom-cache="false" controls>
+  </video>
+</view>

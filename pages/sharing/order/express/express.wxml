@@ -1,0 +1,26 @@
+<view class="container p-bottom" wx:if="{{ express.express_name }}">
+  <!-- 物流公司 -->
+  <view class="flow-all-money dis-flex b-f padding-box">
+    <view class="flex-box">
+      <view class="dis-flex flow-all-list-cont">
+        <text class="col-7">物流公司: {{express.express_name}}</text>
+      </view>
+      <view class="dis-flex flow-all-list-cont">
+        <text class="col-7" selectable="{{true}}">物流单号: {{express.express_no}}</text>
+      </view>
+    </view>
+  </view>
+  <!-- 物流动态 -->
+  <view class="logis-detail m-top20 b-f">
+    <view class="logis-item {{ index === 0 ? 'first' : '' }}" wx:for="{{ express.list }}" wx:key="this" wx:for-item="item">
+      <view class="logis-item-content">
+        <view class="logis-item-content__describe">
+          <text class="f-26">{{ item.context }}</text>
+        </view>
+        <view class="logis-item-content__time">
+          <text class="f-22">{{ item.ftime }}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

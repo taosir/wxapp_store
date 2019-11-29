@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "",
+  "usingComponents": {
+    "zan-dialog": "/components/dialog/index"
+  }
+}

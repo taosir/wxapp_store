@@ -1,0 +1,23 @@
+<!-- 辅助空白 -->
+<view class="diy-shop">
+  <view class="shop-item" wx:for="{{ dataList }}" wx:for-item="dataItem" wx:key="this">
+    <form bindsubmit="_onTargetDetail" report-submit="true">
+      <button formType="submit" class="btn-normal dis-flex flex-y-center" data-id="{{ dataItem.shop_id }}">
+        <view class="shop-item__logo">
+          <image class="image" src="{{ dataItem.logo_image }}"></image>
+        </view>
+        <view class="shop-item__content flex-box">
+          <view class="shop-item__title">
+            <span>{{ dataItem.shop_name }}</span>
+          </view>
+          <view class="shop-item__address onelist-hidden">
+            <span>门店地址：{{ dataItem.region.province }}{{ dataItem.region.city }}{{ dataItem.region.region }}{{ dataItem.address }}</span>
+          </view>
+          <view class="shop-item__phone">
+            <span>联系电话：{{ dataItem.phone }}</span>
+          </view>
+        </view>
+      </button>
+    </form>
+  </view>
+</view>

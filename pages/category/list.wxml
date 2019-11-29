@@ -1,0 +1,81 @@
+<view class="container">
+  <view class="list-header">
+
+    <!-- 搜索框 -->
+    <view class="index-search-box dis-flex">
+      <view class="index-search flex-box" catchtap="triggerSearch">
+        <view class="index-cont-search">
+          <icon class="text-center" size="15" type="search"></icon>
+          <text>{{ option.search ? option.search  : '搜索商品' }}</text>
+        </view>
+      </view>
+      <view bindtap="onChangeShowState" class="list-right f-28">
+        <text class="iconfont icon-tubiao_kuaizhuangpailie" wx:if="{{showView}}"></text>
+        <text class="iconfont icon-tubiao_liebiaopailie" wx:else></text>
+      </view>
+    </view>
+
+    <!-- 筛选标签 -->
+    <view class="store_nav_cont dis-flex b-f b-b">
+      <view bindtap="switchSortType" data-type="all" class="flex-box t-c p-r" data-index="0 " id="list-{{sortType==='all'?true:0}}">
+        <text>综 合</text>
+      </view>
+      <view bindtap="switchSortType" data-type="sales" class="flex-box t-c p-r" data-index="1" id="list-{{sortType==='sales'?true:0}}">
+        <text>销 量</text>
+      </view>
+      <view bindtap="switchSortType" data-type="price" class="dis-flex flex-x-center flex-box t-c p-r" data-index="2" id="list-{{sortType==='price'?true:0}}">
+        <text class="price__text">价 格</text>
+        <view class="price__arrow dis-flex flex-dir-column flex-x-center flex-y-center">
+          <text class="iconfont icon-arrow-top {{sortPrice?'':'active'}}"></text>
+          <text class="iconfont icon-arrow-bottom {{sortPrice?'active':''}}"></text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 商品列表 -->
+    <scroll-view bindscrolltolower="bindDownLoad" scroll-y style="height: {{scrollHeight}}px; width: 750rpx;" wx:if="{{list.data.length > 0}}">
+      <view class="new">
+        <view class="category-list {{ showView ? 'arrange' : '' }}">
+          <navigator class="list b-f" hover-class="none" url="../goods/index?goods_id={{item.goods_id}}" wx:for="{{list.data}}" wx:key="list">
+            <view class="left">
+              <view class="img">
+                <image class="goodsImg" mode="aspectFit" src="{{ item.goods_image }}"></image>
+              </view>
+            </view>
+            <view class="right">
+              <view class="cont">
+                <!-- 商品名称 -->
+                <text class="title f-26 twolist-hidden">{{item.goods_name}}</text>
+                <block wx:if="{{ showView }}">
+                  <!-- 商品卖点 -->
+                  <view class="selling_point onelist-hidden">
+                    <text>{{ item.selling_point }}</text>
+                  </view>
+                  <!-- 商品销量 -->
+                  <view class="goods_sales dis-flex">
+                    <text class="onelist-hidden">已售{{ item.goods_sales }}件</text>
+                  </view>
+                </block>
+                <!-- 商品价格 -->
+                <view class="detail-price onelist-hidden">
+                  <text class="goods-price f-30 col-m">￥{{item.goods_sku.goods_price}}</text>
+                  <text class="line-price col-9 f-24" wx:if="{{item.goods_sku.line_price>0}}">{{item.goods_sku.line_price}}</text>
+                </view>
+              </view>
+            </view>
+          </navigator>
+        </view>
+      </view>
+      <view wx:if="{{ no_more }}" class="no-more f-30">亲, 没有更多了</view>
+    </scroll-view>
+  </view>
+
+  <!-- 无数据 -->
+  <view wx:if="{{ !isLoading && !list.data.length }}" class="no-content" style="margin-top:130px;">
+    <view class="img">
+      <image mode="aspectFit" src="../../images/no_content.png"></image>
+    </view>
+    <text class="cont">亲, 没有相关内容</text>
+  </view>
+
+</view>

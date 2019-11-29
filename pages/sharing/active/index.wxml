@@ -1,0 +1,190 @@
+<import src="../../../wxParse/wxParse.wxml"></import>
+<view class="container p-bottom" wx:if="{{ detail.active_id }}">
+
+  <!-- 商品信息 -->
+  <view class="header dis-flex">
+    <view class="header_lf" catchtap="onTargetGoods">
+      <image src="{{ goods.goods_image }}"></image>
+    </view>
+    <view class="header_rt">
+      <view class="goods-name" catchtap="onTargetGoods">
+        <text class="twolist-hidden">{{ goods.goods_name }}</text>
+      </view>
+      <view class="goods-price">
+        <text class="f-26 col-m">￥</text>
+        <text class="m-price">{{ goods.goods_sku.sharing_price }}</text>
+        <text class="line-price" wx:if="{{ goods.goods_sku.line_price > 0 }}">￥{{ goods.goods_sku.line_price }}</text>
+      </view>
+      <view class="goods-tag">
+        <text class="tag-item">{{ detail.people }}人团</text>
+        <text class="tag-item" wx:if="{{ goods.goods_sku.line_price > 0 }}">拼团省{{ goods.goods_sku.diff_price }}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 拼团成员 -->
+  <view class="main">
+
+    <!-- 拼团状态 (成功、失败) -->
+    <view wx:if="{{ detail.status.value == 30 }}" class="main_status main_status__fail">
+      <text class="status-icon iconfont icon-shibai"></text>
+      <text>超过有效时间，拼团失败</text>
+    </view>
+    <view wx:if="{{ detail.status.value == 20 }}" class="main_status main_status__success">
+      <text class="status-icon iconfont icon-success"></text>
+      <text>拼团已成功</text>
+    </view>
+
+    <!-- 参团用户 -->
+    <view class="main_user">
+      <view wx:for="{{ detail.users }}" wx:key="this" class="user-item">
+        <image src="{{ item.user.avatarUrl }}"></image>
+        <view wx:if="{{ item.is_creator == 1 }}" class="user-role">
+          <text>团长</text>
+        </view>
+      </view>
+      <!-- 虚位以待 -->
+      <view wx:for="{{ detail.surplus_people }}" wx:key="this" class="user-item user-item__wait dis-flex flex-x-center flex-y-center">
+        <text class="iconfont icon-wenhao"></text>
+      </view>
+    </view>
+
+    <!-- 拼单状态：拼团中 -->
+    <view wx:if="{{ detail.status.value == 10 }}" class="main_status main_tiem">
+      <text>还差 </text>
+      <text class="main_timer_color">{{ detail.surplus_people }}</text>
+      <text> 个名额，</text>
+      <view class="tui-countdown-content" wx:for="{{countDownList}}" wx:key="countDownList">
+        <!-- <text class="tui-conutdown-box">{{item.day}}</text>: -->
+        <text class="tui-conutdown-box">{{item.hou}}</text> :
+        <text class="tui-conutdown-box">{{item.min}}</text> :
+        <text class="tui-conutdown-box tui-countdown-bg">{{item.sec}}</text>
+      </view>
+      <text> 后结束</text>
+    </view>
+
+    <!-- 操作按钮 -->
+    <block wx:if="{{ detail.status.value == 10 }}">
+      <button wx:if="{{ !is_join }}" catchtap="onTriggerOrder">立即参团</button>
+      <button wx:else open-type="share">立即分享</button>
+    </block>
+    <button wx:else catchtap="onTargetGoods">去开团</button>
+  </view>
+
+  <!-- 拼团须知 -->
+  <view class="notice" catchtap="onToggleRules">
+    <text class="f-30">拼团须知</text>
+    <text class="t-brief">{{ setting.basic.rule_brief }}</text>
+    <text class="icon-arrow"></text>
+  </view>
+
+  <!-- 更多拼团 -->
+  <view class="content" wx:if="{{ goodsList.data.length }}">
+    <view class="content_top" catchtap="onTargetIndex">
+      <text class="f-30">更多拼团</text>
+      <text class="icon-arrow"></text>
+    </view>
+    <view wx:for="{{ goodsList.data }}" wx:key="key" class="content_main dis-flex" catchtap="onTargetGoods" data-id="{{ item.goods_id }}">
+      <view class="goods-image">
+        <image src="{{ item.goods_image }}"></image>
+      </view>
+      <view class="goods-detail">
+        <view class="goods-name twolist-hidden">
+          <text>{{ item.goods_name }}</text>
+        </view>
+        <view class="goods-sales">
+          <text>已团{{ item.goods_sales }}件</text>
+        </view>
+        <view class="goods-detail_bottom clear">
+          <view class="bottom-right onelist-hidden fl dis-flex flex-y-end">
+            <text class="f-24 col-m">￥</text>
+            <text class="goods-price col-m">{{ item.goods_sku.sharing_price }}</text>
+            <text class="line-price">￥{{ item.goods_sku.line_price }}</text>
+          </view>
+          <button class="fr btn-navie">去开团</button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+</view>
+
+<!-- 快捷导航 -->
+<shortcut right="50rpx" bottom="200rpx"></shortcut>
+
+<!-- 确认购买弹窗 -->
+<zan-popup show="{{ showBottomPopup }}" type="bottom" bindclose="onToggleTrade">
+  <view class="popup__trade">
+    <!-- 关闭按钮 -->
+    <view class="trade-close dis-flex flex-x-center flex-y-center" catchtap="onToggleTrade">
+      <text class="iconfont icon-close f-26"></text>
+    </view>
+    <!-- 主体信息 -->
+    <view class="trade-main">
+      <view class="goods-info dis-flex">
+        <!-- 图片名称 -->
+        <view class="goods-image" catchtap="onPreviewSkuImage">
+          <image src="{{ skuCoverImage }}"></image>
+        </view>
+        <view class="flex-box">
+          <view class="money-box">
+            <text class="col-m f-26">￥</text>
+            <text class="price col-m">{{ sharing_price }}</text>
+            <text class="del" wx:if="{{line_price>0}}">￥{{line_price}}</text>
+          </view>
+          <view class="goods-stock dis-flex">
+            <text class="flex-box f-26 col-7">库存：{{stock_num}}</text>
+          </view>
+        </view>
+      </view>
+      <!-- 规格列表 -->
+      <view class="goods-list-box" scroll-y="true">
+        <view class="cf tmall-types" wx:for="{{ goodsMultiSpec.spec_attr }}" wx:for-item="attr" wx:for-index="attr_idx" wx:key="key">
+          <view class="tipstxt" data-id="{{attr.group_id}}">{{attr.group_name}}</view>
+          <view class="cf cartypelist" wx:for="{{attr.spec_items}}" wx:for-index="item_idx" wx:key="ikey">
+            <view wx:if="{{item.checked}}">
+              <form bindsubmit="onSwitchSpec" report-submit="true" data-attr-idx="{{attr_idx}}" data-item-idx="{{item_idx}}">
+                <button formType="submit" class="btn-normal">
+                  <view class="cartypeitem cur">{{item.spec_value}}</view>
+                </button>
+              </form>
+            </view>
+            <view wx:else>
+              <form bindsubmit="onSwitchSpec" report-submit="true" data-attr-idx="{{attr_idx}}" data-item-idx="{{item_idx}}">
+                <button formType="submit" class="btn-normal">
+                  <view class="cartypeitem">{{item.spec_value}}</view>
+                </button>
+              </form>
+            </view>
+          </view>
+        </view>
+      </view>
+      <!-- 购买数量 -->
+      <view class="buy_number">
+        <view class="buyNumber f-26">
+          <text>购买数量</text>
+        </view>
+        <view class="selectNumber">
+          <form bindsubmit="onDecGoodsNumber" report-submit="true">
+            <button formType="submit" class="default {{goods_num>1?'':' default-active'}}" type="default">-</button>
+          </form>
+          <input bindinput="onInputGoodsNum" type="number" value="{{goods_num}}"></input>
+          <form bindsubmit="onIncGoodsNumber" report-submit="true">
+            <button formType="submit" class="default" type="default">+</button>
+          </form>
+        </view>
+      </view>
+    </view>
+    <!-- 底部操作栏 -->
+    <view class="footer-fixed f-30">
+      <block wx:if="{{stock_num > 0}}">
+        <view class="order-bt dis-flex flex-x-center flex-y-center" catchtap="onCheckout" data-type="buyNow">
+          <text>确定</text>
+        </view>
+      </block>
+      <view class="default-btn" wx:else>暂无现货</view>
+    </view>
+  </view>
+</zan-popup>
+
+<zan-dialog id="zan-base-dialog"></zan-dialog>

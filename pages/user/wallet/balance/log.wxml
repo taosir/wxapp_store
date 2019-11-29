@@ -1,0 +1,24 @@
+<view class="container">
+  <view class="recharge-order">
+    <scroll-view bindscrolltolower="bindDownLoad" scroll-y style="height: {{ scrollHeight }}px">
+      <view wx:for="{{ list.data }}" wx:key="this" class="order-item dis-flex flex-x-between flex-y-center">
+        <view class="item-left">
+          <view class="rec-status">
+            <text>{{ item.scene.text }}</text>
+          </view>
+          <view class="rec-time">
+            <text>{{ item.create_time }}</text>
+          </view>
+        </view>
+        <view class="item-right {{ item.money >= 0 ? 'col-green' : 'col-red' }}">
+          <text>{{ item.money > 0 ? '+' : '' }}{{ item.money }}元</text>
+        </view>
+      </view>
+      <!-- 没有记录 -->
+      <view class="no-content" wx:if="{{ !list.data.length && !isLoading }}">
+        <text class="iconfont icon-meiyougengduo"></text>
+        <text class="cont">亲，暂无账单明细哦</text>
+      </view>
+    </scroll-view>
+  </view>
+</view>

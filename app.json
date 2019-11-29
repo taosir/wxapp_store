@@ -1,0 +1,115 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/custom/index",
+    "pages/category/index",
+    "pages/category/list",
+    "pages/goods/index",
+    "pages/goods/comment/comment",
+    "pages/search/index",
+    "pages/flow/index",
+    "pages/flow/checkout",
+    "pages/coupon/coupon",
+    "pages/user/index",
+    "pages/user/wallet/index",
+    "pages/user/wallet/balance/log",
+    "pages/user/recharge/index",
+    "pages/user/recharge/order/index",
+    "pages/user/coupon/coupon",
+    "pages/user/help/index",
+    "pages/order/index",
+    "pages/order/detail",
+    "pages/order/express/express",
+    "pages/order/comment/comment",
+    "pages/order/refund/index",
+    "pages/order/refund/apply/apply",
+    "pages/order/refund/detail/detail",
+    "pages/address/index",
+    "pages/address/create",
+    "pages/address/detail",
+    "pages/login/login",
+    "pages/dealer/index/index",
+    "pages/dealer/apply/apply",
+    "pages/dealer/order/order",
+    "pages/dealer/team/team",
+    "pages/dealer/withdraw/apply/apply",
+    "pages/dealer/withdraw/list/list",
+    "pages/dealer/qrcode/qrcode",
+    "pages/sharing/index/index",
+    "pages/sharing/goods/index",
+    "pages/sharing/goods/comment/comment",
+    "pages/sharing/active/index",
+    "pages/sharing/checkout/index",
+    "pages/sharing/order/index",
+    "pages/sharing/order/detail/detail",
+    "pages/sharing/order/express/express",
+    "pages/sharing/order/comment/comment",
+    "pages/sharing/order/refund/index",
+    "pages/sharing/order/refund/apply/apply",
+    "pages/sharing/order/refund/detail/detail",
+    "pages/article/index",
+    "pages/article/detail/index",
+    "pages/_select/extract_point/index",
+    "pages/shop/detail/index",
+    "pages/store/check/order",
+    "pages/bargain/index/index",
+    "pages/bargain/task/index",
+    "pages/bargain/goods/index",
+    "pages/points/log/index",
+    "pages/sharp/index/index",
+    "pages/sharp/goods/index",
+    "pages/signin/index"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "",
+    "navigationBarTextStyle": "black",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#6e6d6b",
+    "selectedColor": "#ff5060",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home-active.png"
+      },
+      {
+        "pagePath": "pages/category/index",
+        "text": "分类",
+        "iconPath": "images/cate.png",
+        "selectedIconPath": "images/cate-active.png"
+      },
+      {
+        "pagePath": "pages/signin/index",
+        "text": "签到",
+        "iconPath": "images/signin.png",
+        "selectedIconPath": "images/signin-active.png"
+      },
+      {
+        "pagePath": "pages/flow/index",
+        "text": "购物车",
+        "iconPath": "images/flow.png",
+        "selectedIconPath": "images/flow-active.png"
+      },
+      {
+        "pagePath": "pages/user/index",
+        "text": "我的",
+        "iconPath": "images/user.png",
+        "selectedIconPath": "images/user-active.png"
+      }
+    ],
+    "position": "bottom"
+  },
+  "debug": false,
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于为您提供更合适您的服务"
+    }
+  },
+  "sitemapLocation": "sitemap.json"
+}

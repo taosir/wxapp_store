@@ -1,0 +1,24 @@
+<view class="container">
+  <view class="recharge-order">
+    <scroll-view bindscrolltolower="onPageDown" scroll-y style="height: {{ scrollHeight }}px">
+      <view wx:for="{{ list.data }}" wx:key="this" class="order-item dis-flex flex-x-between flex-y-center">
+        <view class="item-left flex-box">
+          <view class="rec-status">
+            <text>{{ item.describe }}</text>
+          </view>
+          <view class="rec-time">
+            <text>{{ item.create_time }}</text>
+          </view>
+        </view>
+        <view class="item-right {{ item.value >= 0 ? 'col-green' : 'col-red' }}">
+          <text>{{ item.value > 0 ? '+' : '' }}{{ item.value }}</text>
+        </view>
+      </view>
+      <!-- 没有记录 -->
+      <view class="no-content" wx:if="{{ !list.data.length && !isLoading }}">
+        <text class="iconfont icon-meiyougengduo"></text>
+        <text class="cont">亲，暂无积分明细哦</text>
+      </view>
+    </scroll-view>
+  </view>
+</view>

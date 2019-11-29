@@ -1,0 +1,39 @@
+<view class="container">
+  <view class="coupon-list" wx:if="{{ list.length }}">
+    <view class="coupon-item" wx:for="{{ list }}" wx:key="this">
+      <view class="item-wrapper color__{{ item.state.value ? item.color.text : 'gray' }}">
+        <view class="coupon-type">{{ item.coupon_type.text }}</view>
+        <view class="tip dis-flex flex-dir-column flex-x-center">
+          <view wx:if="{{ item.coupon_type.value == 10 }}">
+            <text class="f-30">￥</text>
+            <text class="money">{{ item.reduce_price }}</text>
+          </view>
+          <text class="money" wx:if="{{ item.coupon_type.value == 20 }}">{{ item.discount }}折</text>
+          <text class="pay-line">满{{ item.min_price }}元可用</text>
+        </view>
+        <view class="split-line"></view>
+        <view class="content dis-flex flex-dir-column flex-x-between">
+          <view class="title">{{ item.name }}</view>
+          <view class="bottom dis-flex flex-y-center">
+            <view class="time flex-box">
+              <text wx:if="{{ item.expire_type == 10 }}">领取{{ item.expire_day }}天内有效</text>
+              <text wx:if="{{ item.expire_type == 20 }}">{{ item.start_time.text }}~{{ item.end_time.text }}</text>
+            </view>
+            <view class="receive" wx:if="{{ item.state.value }}" catchtap="receive" data-coupon-id="{{ item.coupon_id }}">
+              <text>立即领取</text>
+            </view>
+            <view class="receive state" wx:else>
+              <text>{{ item.state.text }}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view wx:elif="{{ notcont }}">
+    <view class="no-content">
+      <text class="iconfont icon-meiyougengduo"></text>
+      <text class="cont">亲，暂无优惠券哦</text>
+    </view>
+  </view>
+</view>

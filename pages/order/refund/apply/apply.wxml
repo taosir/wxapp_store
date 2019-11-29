@@ -1,0 +1,82 @@
+<view class="container p-bottom" wx:if="{{ detail.order_goods_id }}">
+
+  <form bindsubmit="onSubmit" report-submit>
+
+    <!-- 商品详情 -->
+    <form bindsubmit="onGoodsDetail" report-submit="true">
+      <button class="btn-normal" formType="submit" data-id="{{ detail.goods_id }}">
+        <view class="goods-detail b-f dis-flex flex-dir-row">
+          <view class="left">
+            <image class="goods-image" src="{{ detail.image.file_path }}"></image>
+          </view>
+          <view class="right dis-flex flex-box flex-dir-column flex-x-around">
+            <view class="goods-name">
+              <text class="twolist-hidden">{{ detail.goods_name }}</text>
+            </view>
+            <view class="dis-flex col-9 f-24">
+              <view class="flex-box">{{ detail.goods_attr }}</view>
+              <text class="t-r">×{{ detail.total_num }}</text>
+            </view>
+          </view>
+        </view>
+      </button>
+    </form>
+
+    <!-- 服务类型 -->
+    <view class="row-service b-f m-top20">
+      <view class="row-title">服务类型</view>
+      <form bindsubmit="onSwitchService" report-submit="true">
+        <view class="service-switch dis-flex">
+          <button class="btn-normal" formType="submit" data-type="10">
+            <view class="switch-item {{ serviceType==10?'active':'' }}">退货退款</view>
+          </button>
+          <button class="btn-normal dis-flex" formType="submit" data-type="20">
+            <view class="switch-item {{ serviceType==20?'active':'' }}">换货</view>
+          </button>
+        </view>
+      </form>
+    </view>
+
+    <!-- 申请原因 -->
+    <view class="row-textarea b-f m-top20">
+      <view class="row-title">申请原因</view>
+      <view class="content">
+        <textarea name="content" maxlength="2000" placeholder="请详细填写申请原因，注意保持商品的完好，建议您先与卖家沟通" placeholderStyle="color:#ccc"></textarea>
+      </view>
+    </view>
+
+    <!-- 退款金额 -->
+    <view wx:if="{{ serviceType == 10 }}" class="row-money b-f m-top20 dis-flex">
+      <view class="row-title">退款金额</view>
+      <view class="money col-m">￥{{ detail.total_pay_price }}</view>
+    </view>
+
+    <!-- 上传凭证 -->
+    <view class="row-voucher b-f m-top20">
+      <view class="row-title">上传凭证 (最多6张)</view>
+      <view class="image-list">
+        <!-- 图片列表 -->
+        <view class="image-preview" wx:for="{{imageList}}" wx:for-index="imageIndex" wx:for-item="imagePath" wx:key="this">
+          <text class="image-delete iconfont icon-shanchu" catchtap="deleteImage" data-index="{{index}}" data-image-index="{{imageIndex}}"></text>
+          <image mode="aspectFill" src="{{ imagePath }}"></image>
+        </view>
+        <!-- 上传图片 -->
+        <form wx:if="{{ imageList.length < 6 }}" bindsubmit="chooseImage" report-submit="true">
+          <button class="btn-normal" formType="submit">
+            <view class="image-picker dis-flex flex-dir-column flex-x-center flex-y-center">
+              <text class="choose__icon iconfont icon-tubiao_xiangji"></text>
+              <text class="choose__text">上传图片</text>
+            </view>
+          </button>
+        </form>
+      </view>
+    </view>
+
+    <view class="flow-fixed-footer b-f">
+      <button class="btn-normal" formType="submit">
+        <view class="flow-btn f-32">确认提交</view>
+      </button>
+    </view>
+  </form>
+
+</view>

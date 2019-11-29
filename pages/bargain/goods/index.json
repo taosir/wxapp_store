@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "砍价商品",
+  "usingComponents": {
+    "zan-actionsheet": "/components/actionsheet/index",
+    "zan-dialog": "/components/dialog/index",
+    "zan-popup": "/components/popup/index",
+    "shortcut": "/components/shortcut/shortcut"
+  }
+}

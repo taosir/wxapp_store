@@ -1,0 +1,193 @@
+<view class="container">
+
+  <!-- 内容区域 -->
+  <scroll-view class="container--scroll-view" bindscrolltolower="onScrollToLower" scroll-y="{{ true }}" bindscroll="onScrollEvent" style="height: {{ scrollHeight }}px;">
+
+    <!-- 砍价会场 -->
+    <block wx:if="{{ currentTab == 0 }}">
+
+      <!-- banner轮播 -->
+      <!-- <diy-banner itemStyle="{{ banner.style }}" params="{{ banner.params }}" dataList="{{ banner.data }}"></diy-banner> -->
+
+      <!-- 内容区域 -->
+      <view class="bargain-hall">
+        <!-- 商品列表 -->
+        <view class="goods-item" wx:for="{{ activeList.data }}" wx:key="this">
+          <form bindsubmit="onTargetActive" report-submit="true">
+            <button formType="submit" class="btn-normal" data-id="{{ item.active_id }}">
+              <view class="goods-item--container dis-flex">
+                <!-- 商品图片 -->
+                <view class="goods-image">
+                  <image src="{{ item.goods.goods_image }}"></image>
+                </view>
+                <view class="goods-info">
+                  <!-- 商品名称 -->
+                  <view class="goods-name">
+                    <text class="twolist-hidden">{{ item.goods.goods_name }}</text>
+                  </view>
+                  <!-- 参与的用户头像 -->
+                  <view wx:if="{{ item.helps_count > 0 }}" class="peoples dis-flex">
+                    <view class="user-list dis-flex">
+                      <view wx:for="{{ item.helps }}" wx:for-item="help" wx:key="this" class="user-item-avatar">
+                        <image src="{{ help.user.avatarUrl }}"></image>
+                      </view>
+                    </view>
+                    <view class="people__text">
+                      <text>{{ item.helps_count }}人正在砍价</text>
+                    </view>
+                  </view>
+                  <!-- 商品原价 -->
+                  <view class="goods-price">
+                    <text>￥{{ item.goods.goods_sku.goods_price }}</text>
+                  </view>
+                  <!-- 砍价低价 -->
+                  <view class="floor-price">
+                    <text class="small">最低￥</text>
+                    <text class="big">{{ item.floor_price }}</text>
+                  </view>
+                  <!-- 操作按钮 -->
+                  <view class="opt-touch">
+                    <view class="touch-btn">
+                      <text>立即参加</text>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </button>
+          </form>
+        </view>
+        <!-- 无数据提供的页面 -->
+        <view wx:if="{{ !isLoading && !activeList.data.length }}">
+          <view class="no-content">
+            <text class="iconfont icon-meiyougengduo"></text>
+            <text class="cont">亲，暂无砍价活动哦</text>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <!-- 我的砍价 -->
+    <block wx:if="{{ currentTab == 1 }}">
+      <!-- 内容区域 -->
+      <view class="bargain-hall">
+        <!-- 商品列表 -->
+        <view class="goods-item" wx:for="{{ myList.data }}" wx:key="this">
+          <form bindsubmit="onTargetTask" report-submit="true">
+            <button formType="submit" class="btn-normal" data-id="{{ item.task_id }}">
+              <view class="goods-item--container dis-flex">
+                <!-- 商品图片 -->
+                <view class="goods-image">
+                  <image src="{{ item.goods.goods_image }}"></image>
+                </view>
+                <view class="goods-info">
+                  <!-- 商品名称 -->
+                  <view class="goods-name">
+                    <text class="twolist-hidden">{{ item.goods.goods_name }}</text>
+                  </view>
+                  <!-- 砍价进度 -->
+                  <view class="task-rate">
+                    <block wx:if="{{ item.status }}">
+                      <text>已砍</text>
+                      <text class="col-m">{{ item.cut_money }}</text>
+                      <text>元，</text>
+                      <text>只差</text>
+                      <text class="col-m">{{ item.surplus_money }}</text>
+                      <text>元</text>
+                    </block>
+                    <block wx:if="{{ item.is_floor }}">
+                      <text>已砍至最低</text>
+                      <text class="col-m">{{ item.floor_price }}</text>
+                      <text>元</text>
+                    </block>
+                  </view>
+                  <!-- 任务状态 -->
+                  <view class="task-status dis-flex flex-y-center">
+                    <!-- 倒计时 -->
+                    <view wx:if="{{ item.status }}" class="count-down dis-flex flex-y-center">
+                      <view class="clock-text">
+                        <text>剩余</text>
+                      </view>
+                      <view class="clock dis-flex">
+                        <view class="clock-time">
+                          <text>{{ countDownList[index].dynamic.hou }}</text>
+                        </view>
+                        <view class="clock-symbol">
+                          <text>:</text>
+                        </view>
+                        <view class="clock-time">
+                          <text>{{ countDownList[index].dynamic.min }}</text>
+                        </view>
+                        <view class="clock-symbol">
+                          <text>:</text>
+                        </view>
+                        <view class="clock-time">
+                          <text>{{ countDownList[index].dynamic.sec }}</text>
+                        </view>
+                      </view>
+                    </view>
+                    <view wx:if="{{ !item.status }}" class="task-status__text">
+                      <text class="col-m">{{ item.is_buy ? '砍价成功' : '已结束' }}</text>
+                    </view>
+                  </view>
+                  <!-- 操作按钮 -->
+                  <view wx:if="{{ item.status }}" class="opt-touch">
+                    <view class="touch-btn">
+                      <text>继续砍价</text>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </button>
+          </form>
+        </view>
+        <view wx:if="{{ noMore }}" class="no-more f-28">亲, 没有更多了</view>
+        <!-- 无数据提供的页面 -->
+        <view wx:if="{{ !isLoading && !myList.data.length }}">
+          <view class="no-content">
+            <text class="iconfont icon-meiyougengduo"></text>
+            <text class="cont">亲，暂未参与砍价活动哦</text>
+          </view>
+        </view>
+      </view>
+    </block>
+  </scroll-view>
+
+  <!-- 底部选项卡 -->
+  <view class="footer-fixed dis-flex">
+    <!-- 砍价会场 -->
+    <view class="tabbar-item flex-box {{ currentTab == 0 ? 'item__active' : '' }}">
+      <form bindsubmit="onToggleTab" data-index="0" report-submit="true">
+        <button formType="submit" class="btn-normal">
+          <view class="tabbar-item-content dis-flex flex-x-center flex-y-center">
+            <view class="tabbar-item-icon">
+              <text class="iconfont icon-shangcheng"></text>
+            </view>
+            <view class="tabbar-item-name">
+              <text>砍价会场</text>
+            </view>
+          </view>
+        </button>
+      </form>
+    </view>
+    <!-- 分割线 -->
+    <view class="tabbar-item__divider">
+      <view class="divider-line"></view>
+    </view>
+    <!-- 我的砍价 -->
+    <view class="tabbar-item flex-box {{ currentTab == 1 ? 'item__active' : '' }}">
+      <form bindsubmit="onToggleTab" data-index="1" report-submit="true">
+        <button formType="submit" class="btn-normal">
+          <view class="tabbar-item-content dis-flex flex-x-center flex-y-center">
+            <view class="tabbar-item-icon">
+              <text class="iconfont icon-sy-yh"></text>
+            </view>
+            <view class="tabbar-item-name">
+              <text>我的砍价</text>
+            </view>
+          </view>
+        </button>
+      </form>
+    </view>
+  </view>
+
+</view>

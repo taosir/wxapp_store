@@ -1,0 +1,1 @@
+const App = getApp(); Page({ data: {}, onLoad: function (options) { }, getUserInfo(e) { let _this = this; App.getUserInfo(e, () => { _this.onNavigateBack() }) }, onNotLogin() { let _this = this; _this.onNavigateBack() }, onNavigateBack() { wx.navigateBack() } })

@@ -1,0 +1,281 @@
+<view wx:if="{{ active.active_id }}" class="container">
+
+  <!-- 富文本组件 -->
+  <import src="../../../wxParse/wxParse.wxml"></import>
+
+  <!-- 滚动容器 -->
+  <scroll-view class="scroll-container" bindscroll="onScrollEvent" scroll-top="{{ scrollTop }}" scroll-y="true">
+
+    <!-- 商品图片 -->
+    <view class="goods-swiper">
+      <swiper autoplay="{{ autoplay }}" bindchange="setCurrent" class="banner-box  swiper-box" duration="{{duration}}" indicator-dots="{{indicatorDots}}" interval="{{interval}}" circular="{{true}}">
+        <swiper-item wx:for="{{ goods.image }}" wx:key="this" catchtap="onPreviewImages" data-index="{{ index }}">
+          <image class="slide-image" mode="aspectFill" src="{{ item.file_path }}"></image>
+        </swiper-item>
+      </swiper>
+      <view class="banner-num">
+        <text>{{ currentIndex }}</text>
+        <text>/</text>
+        <text>{{ goods.image.length }}</text>
+      </view>
+    </view>
+    <!-- 商品信息 -->
+    <view class="goods-info m-top20">
+      <!-- 价格、销量 -->
+      <view class="info-item info-item__top dis-flex flex-x-between flex-y-end">
+        <view class="block-left dis-flex flex-y-end">
+          <view class="active-tag">
+            <text>限时秒杀</text>
+          </view>
+          <!-- 秒杀价 -->
+          <text class="floor-price__samll">￥</text>
+          <text class="floor-price">{{ goods.goods_sku.seckill_price }}</text>
+          <!-- 原价 -->
+          <text class="original-price">￥{{ goods.goods_sku.original_price }}</text>
+        </view>
+        <view class="block-right dis-flex">
+          <!-- 销量 -->
+          <view class="goods-sales">
+            <text>已抢{{ active.sales_actual }}件</text>
+          </view>
+        </view>
+      </view>
+      <!-- 标题、分享 -->
+      <view class="info-item info-item__name dis-flex flex-y-center">
+        <view class="goods-name flex-box">
+          <text class="twolist-hidden">{{ goods.goods_name }}</text>
+        </view>
+        <view class="goods-share__line"></view>
+        <view class="goods-share">
+          <form bindsubmit="onClickShare" report-submit="true">
+            <button formType="submit" class="share-btn dis-flex flex-dir-column">
+              <text class="share__icon iconfont icon-fenxiang"></text>
+              <text class="f-24">分享</text>
+            </button>
+          </form>
+        </view>
+      </view>
+      <!-- 商品卖点 -->
+      <view wx:if="{{ goods.selling_point }}" class="info-item info-item_selling-point">
+        <text>{{ goods.selling_point }}</text>
+      </view>
+      <!-- 活动倒计时 -->
+      <view wx:if="{{ active.active_status != ActiveStatusEnum.STATE_END.value }}" class="info-item info-item_status info-item_countdown">
+        <text class="countdown-icon iconfont icon-naozhong"></text>
+        <block wx:for="{{ actEndTimeList }}" wx:key="this">
+          <text>距离秒杀{{ active.active_status == ActiveStatusEnum.STATE_SOON.value ? '开始' : '结束' }} 还剩{{ active.active_status == ActiveStatusEnum.STATE_SOON.value?item.dynamic.hou-1:item.dynamic.hou }}时{{ item.dynamic.min }}分{{ item.dynamic.sec }}秒</text>
+        </block>
+      </view>
+      <!-- 活动已结束 -->
+      <view wx:else class="info-item info-item_status info-item_end">
+        <text class="countdown-icon iconfont icon-naozhong"></text>
+        <text>秒杀活动已结束，下次记得早点来哦~</text>
+      </view>
+    </view>
+
+    <!-- 商品评价 -->
+    <view class="goods-comment m-top20 b-f" wx:if="{{ goods.comment_data.length }}">
+      <view class="item-title dis-flex">
+        <view class="block-left flex-box">
+          <text>评价 ({{ goods.comment_data_count }}条)</text>
+        </view>
+        <view class="block-right">
+          <text catchtap="onTargetToComment" class="show-more col-9">查看更多</text>
+          <text class="iconfont icon-xiangyoujiantou"></text>
+        </view>
+      </view>
+      <!-- 评论列表 -->
+      <view class="comment-list">
+        <view class="comment-item" wx:for="{{ goods.comment_data }}" wx:key="this">
+          <view class="comment-item_row dis-flex flex-y-center">
+            <view class="user-info dis-flex flex-y-center">
+              <image class="avatar" src="{{ item.user.avatarUrl }}"></image>
+              <text class="user-name">{{ item.user.nickName }}</text>
+            </view>
+            <view class="star-rating">
+              <text class="star-icon iconfont icon-shoucang active"></text>
+              <block wx:if="{{ item.score < 30 }}">
+                <text class="star-icon iconfont icon-shoucang active"></text>
+                <text class="star-icon iconfont icon-shoucang active"></text>
+              </block>
+              <block wx:if="{{ item.score < 20 }}">
+                <text class="star-icon iconfont icon-shoucang active"></text>
+                <text class="star-icon iconfont icon-shoucang active"></text>
+              </block>
+            </view>
+          </view>
+          <view class="goods-comment-cont m-top20">
+            <text class="f-26 twolist-hidden">{{ item.content }}</text>
+          </view>
+          <view class="f-22 col-9 m-top10">{{ item.create_time }}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 商品描述 -->
+    <view class="goods-content m-top20">
+      <view class="item-title b-f">
+        <text>商品描述</text>
+      </view>
+      <block wx:if="{{ goods.content != '' }}">
+        <view class="goods-content__detail b-f">
+          <template is="wxParse" data="{{ wxParseData:content.nodes }}"></template>
+        </view>
+      </block>
+      <block wx:else>
+        <view class="no-content">
+          <text class="iconfont icon-wushuju"></text>
+          <text class="cont">亲，暂无商品描述</text>
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+
+  <!-- 底部选项卡 -->
+  <view class="footer-fixed">
+    <view class="footer-container dis-flex">
+      <!-- 导航图标 -->
+      <view class="foo-item-fast dis-flex flex-x-center flex-y-center">
+        <form bindsubmit="onTargetHome" report-submit>
+          <button class="btn-normal" formType="submit">
+            <view class="fast-item fast-item_home">
+              <view class="fast-icon">
+                <text class="iconfont icon-shouye"></text>
+              </view>
+              <view class="fast-text">
+                <text>首页</text>
+              </view>
+            </view>
+          </button>
+        </form>
+        <button class="btn-normal" open-type="contact">
+          <view class="fast-item">
+            <view class="fast-icon">
+              <text class="iconfont icon-kefu1"></text>
+            </view>
+            <view class="fast-text">
+              <text>客服</text>
+            </view>
+          </view>
+        </button>
+      </view>
+      <!-- 操作按钮 -->
+      <view class="foo-item-trigger flex-box">
+        <form bindsubmit="onToggleTrade" report-submit>
+          <button wx:if="{{  active.active_status == ActiveStatusEnum.STATE_BEGIN.value }}" class="opt-btn btn-main btn-normal" form-type="submit">
+            <text>立即购买</text>
+          </button>
+          <button wx:else class="opt-btn btn-gray btn-normal">
+            <text>{{ active.active_status == ActiveStatusEnum.STATE_SOON.value ? '活动未开始' : '活动已结束' }}</text>
+          </button>
+        </form>
+      </view>
+    </view>
+  </view>
+
+  <!-- 分享按钮 -->
+  <zan-actionsheet show="{{ share.show }}" actions="{{ share.actions }}" cancel-text="{{ share.cancelText }}" cancel-with-mask="{{ share.cancelWithMask }}" bind:cancel="onCloseShare" bind:actionclick="onClickShareItem" mask-class="tiny" />
+
+  <!-- 商品海报 弹出层 -->
+  <zan-popup show="{{ share.showPopup }}" bindclose="onTogglePopup">
+    <view class="pop-poster pop-example__container">
+      <!-- 关闭按钮 -->
+      <view class="pop-close dis-flex flex-x-center flex-y-center" catchtap="onTogglePopup">
+        <text class="iconfont icon-shanchu f-30 col-9"></text>
+      </view>
+      <form bindsubmit="onSavePoster" report-submit="true">
+        <view class="poster__image">
+          <image mode="widthFix" src="{{ qrcode }}"></image>
+        </view>
+        <view class="poster__tips m-top10 t-c">
+        </view>
+        <view class="padding-box m-top10 profile-btn">
+          <button formType="submit">保存图片</button>
+        </view>
+      </form>
+    </view>
+  </zan-popup>
+
+  <!-- 确认购买弹窗 -->
+  <zan-popup show="{{ showBottomPopup }}" type="bottom" bindclose="onToggleTrade">
+    <view class="popup__trade">
+      <!-- 关闭按钮 -->
+      <view class="trade-close dis-flex flex-x-center flex-y-center" catchtap="onToggleTrade">
+        <text class="iconfont icon-close f-26"></text>
+      </view>
+      <!-- 主体信息 -->
+      <view class="trade-main">
+        <view class="goods-info dis-flex">
+          <!-- 图片名称 -->
+          <view class="goods-image" catchtap="onPreviewSkuImage">
+            <image src="{{ skuCoverImage }}"></image>
+          </view>
+          <view class="block-right flex-box">
+            <view class="block-item dis-flex flex-y-end">
+              <!-- 商品价 -->
+              <view class="goods-price col-m">
+                <text class="f-26">￥</text>
+                <text class="f-36">{{ goods.goods_sku.seckill_price }}</text>
+              </view>
+              <!-- 划线价 -->
+              <view class="line-price" wx:if="{{ original_price > 0 }}">
+                <text>{{ goods.goods_sku.original_price }}</text>
+              </view>
+            </view>
+            <view class="goods-stock dis-flex flex-x-between">
+              <text class="f-26 col-7">库存：{{ seckill_stock }}</text>
+              <text wx:if="{{ goods.limit_num > 0 }}" class="f-26 col-7">限购：{{ goods.limit_num }}件</text>
+            </view>
+          </view>
+        </view>
+        <!-- 规格列表 -->
+        <view class="goods-attr">
+          <!-- 滚动容器 -->
+          <scroll-view class="goods-attr--scroll" scroll-y="{{ true }}">
+            <view class="group-item" wx:for="{{ goodsMultiSpec.spec_attr }}" wx:for-item="attr" wx:for-index="attr_idx" wx:key="this">
+              <view class="tips-text" data-id="{{ attr.group_id }}">{{ attr.group_name }}</view>
+              <view class="spec-item {{ item.checked ? 'cur' : '' }}" wx:for="{{ attr.spec_items }}" wx:for-index="item_idx" wx:key="this" data-attr-idx="{{ attr_idx }}" data-item-idx="{{ item_idx }}" catchtap="onSwitchSpec">
+                {{ item.spec_value }}
+              </view>
+            </view>
+          </scroll-view>
+        </view>
+        <!-- 购买数量 -->
+        <view class="goods-number">
+          <view class="tips-text">
+            <text>购买数量</text>
+          </view>
+          <view class="select-number">
+            <form bindsubmit="onDecGoodsNumber" report-submit="true">
+              <button formType="submit" class="default {{ goods_num > 1 ? '' : 'disabled' }}" type="default">-</button>
+            </form>
+            <input bindinput="onInputGoodsNum" type="number" value="{{ goods_num }}"></input>
+            <form bindsubmit="onIncGoodsNumber" report-submit="true">
+              <button formType="submit" class="default" type="default">+</button>
+            </form>
+          </view>
+        </view>
+      </view>
+      <!-- 底部操作栏 -->
+      <view class="footer-fixed f-30">
+        <view wx:if="{{ seckill_stock > 0 }}" class="flex-box">
+          <form bindsubmit="onCheckout" report-submit>
+            <button class="opt-btn btn-main btn-normal" formType="submit">
+              <text>确定</text>
+            </button>
+          </form>
+        </view>
+        <view class="flex-box opt-btn btn-gray" wx:else>暂无现货</view>
+      </view>
+    </view>
+  </zan-popup>
+
+  <!-- 快捷导航 -->
+  <shortcut bottom="120rpx"></shortcut>
+
+  <!-- 返回顶部 -->
+  <view catchtap="onScrollTop" class="widget-goTop" wx:if="{{ showTopWidget }}">
+    <text class="iconfont icon-fanhuidingbu"></text>
+  </view>
+
+</view>

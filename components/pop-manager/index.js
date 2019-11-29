@@ -1,0 +1,1 @@
+'use strict'; Component({ properties: { show: { type: Boolean, value: false }, overlay: { type: Boolean, value: true }, showOverlay: { type: Boolean, value: true }, type: { type: String, value: 'center' } }, methods: { handleMaskClick: function handleMaskClick() { this.triggerEvent('clickmask', {}) } } });

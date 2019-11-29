@@ -1,0 +1,6 @@
+<view class="container b-f">
+
+  <!-- DIY组件 -->
+  <diy-component diyItems="{{ items }}"></diy-component>
+
+</view>

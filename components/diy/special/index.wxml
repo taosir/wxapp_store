@@ -1,0 +1,31 @@
+<!-- 头条快报 -->
+<view class="diy-special dis-flex flex-y-center">
+  <!-- 图片 -->
+  <form bindsubmit="_onTargetIndex" report-submit="true">
+    <button formType="submit" class="btn-normal dis-flex">
+      <view class="special-left">
+        <image class="image" mode="widthFix" src="{{ itemStyle.image }}"></image>
+      </view>
+    </button>
+  </form>
+  <!-- 资讯轮播 -->
+  <swiper class="special-content flex-box display_{{ itemStyle.display }}" autoplay="{{ true }}" interval="{{ 2200 }}" duration="800" circular="{{ true }}" vertical="{{ true }}" display-multiple-items="{{ itemStyle.display }}">
+    <swiper-item wx:for="{{ dataList }}" wx:key="this">
+      <form bindsubmit="_onTargetDetail" report-submit="true">
+        <button formType="submit" class="btn-normal dis-flex" data-id="{{ item.article_id }}">
+          <view class="content-item onelist-hidden">
+            <text>: {{ item.article_title }}</text>
+          </view>
+        </button>
+      </form>
+    </swiper-item>
+  </swiper>
+  <!-- 更多资讯 -->
+  <!-- <form bindsubmit="_onTargetIndex" report-submit="true">
+    <button formType="submit" class="btn-normal dis-flex">
+      <view class="special-more">
+        <i class="iconfont icon-xiangyoujiantou"></i>
+      </view>
+    </button>
+  </form> -->
+</view>

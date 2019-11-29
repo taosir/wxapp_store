@@ -1,0 +1,8 @@
+<!-- 单图组 -->
+<view class="diy-imageSingle" style="padding-bottom: {{ itemStyle.paddingTop }}px; background: {{ itemStyle.background }};">
+  <view class="item-image" wx:for="{{ dataList }}" wx:key="this" wx:for-item="dataItem" style="padding: {{ itemStyle.paddingTop }}px {{ itemStyle.paddingLeft }}px 0;">
+    <view class="nav-to" catchtap="navigationTo" data-url="{{ dataItem.linkUrl }}">
+      <image class="image" src="{{ dataItem.imgUrl }}" mode="widthFix"></image>
+    </view>
+  </view>
+</view>

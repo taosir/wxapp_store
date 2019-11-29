@@ -1,0 +1,171 @@
+<view class="container" wx:if="{{ task.task_id }}">
+
+  <!-- 顶部操作栏 -->
+  <view class="header dis-flex flex-x-between">
+    <form bindsubmit="onTargetHome" report-submit="true">
+      <button formType="submit" class="btn-normal">
+        <view class="item-touch">
+          <text>返回首页</text>
+        </view>
+      </button>
+    </form>
+    <form bindsubmit="onToggleRules" report-submit="true">
+      <button formType="submit" class="btn-normal">
+        <view class="item-touch">
+          <text>玩法详情</text>
+        </view>
+      </button>
+    </form>
+  </view>
+
+  <view class="content">
+    <!-- 砍价信息 -->
+    <view class="infos-wrap">
+      <view class="infos-top">
+        <view class="infos-img">
+          <image src="{{ task.user.avatarUrl }}"></image>
+        </view>
+        <view class="infos-name">
+          <text>{{ task.user.nickName }}</text>
+        </view>
+      </view>
+      <view class="infos-mask">
+        <view class="infos-prompt" wx:if="{{ active.prompt_words }}">
+          <text>{{ active.prompt_words }}</text>
+        </view>
+        <!-- 商品信息 -->
+        <form bindsubmit="onTargetGoods" report-submit="true">
+          <button formType="submit" class="btn-normal">
+            <view class="infos-item">
+              <view class="infos-item-img">
+                <image src="{{ goods.goods_image }}"></image>
+              </view>
+              <view class="infos-item-info">
+                <view class="infos-item-name">
+                  <text class="twolist-hidden">{{ goods.goods_name }}</text>
+                </view>
+                <view class="infos-item-stock">
+                  <view class="stock-widget">
+                    <text>仅剩{{ goods.goods_sku.stock_num }}件</text>
+                  </view>
+                </view>
+                <view class="infos-item-price dis-flex flex-y-end">
+                  <text class="price1 col-m">底价¥</text>
+                  <text class="price2 col-m">{{ task.floor_price }}</text>
+                  <text class="price3">¥{{ task.goods_price }}</text>
+                </view>
+              </view>
+            </view>
+          </button>
+        </form>
+
+      </view>
+    </view>
+
+    <!-- 分割线 -->
+    <view class="connect">
+      <view class="connect-ring bgf-ring--left">
+        <text></text>
+      </view>
+      <view class="connect-ring bgf-ring--right">
+        <text></text>
+      </view>
+    </view>
+
+    <!-- 砍价进度 -->
+    <view class="bargain-wrap">
+      <!-- 已砍数目 -->
+      <view class="bargain-info">
+        <view wx:if="{{ task.status }}" class="bargain-ing">
+          <block wx:if="{{ !task.is_floor }}">
+            <text>已砍</text>
+            <text class="focal col-m">{{ task.cut_money }}</text>
+            <text>元，还差</text>
+            <text class="focal col-m">{{ task.surplus_money }}</text>
+            <text>元</text>
+          </block>
+          <block wx:else>
+            <text>已砍至最低</text>
+            <text class="focal col-m">{{ task.floor_price }}</text>
+            <text>元，砍价成功！</text>
+          </block>
+        </view>
+        <view wx:else class="bargain-ing">
+          <text class="col-9">该砍价活动已结束～</text>
+        </view>
+      </view>
+      <!-- 砍价进度条 -->
+      <view class="bgn__process m-top30">
+        <view class="bgn__process-bottom">
+          <view class="bgn__process-process process--ani" style="width: {{ task.bargain_rate }}%;"></view>
+        </view>
+      </view>
+      <!-- 操作按钮 -->
+      <view class="btn-container m-top30 dis-flex flex-x-center">
+        <!-- 立即购买 -->
+        <form wx:if="{{ showBuyBtn }}" bindsubmit="onCheckout" report-submit="true">
+          <button formType="submit" class="btn-normal">
+            <view class="btn-item btn-item__buy {{ task.is_floor ? 'complete' : '' }}">
+              <text>立即购买</text>
+            </view>
+          </button>
+        </form>
+        <!-- 分享给朋友 -->
+        <button wx:if="{{ showShareBtn }}" open-type="share" class="btn-normal">
+          <view class="btn-item btn-item__main">
+            <text>邀请好友砍价</text>
+          </view>
+        </button>
+        <!-- 砍刀操作 -->
+        <form wx:if="{{ showCatBtn }}" bindsubmit="onHelpCut" report-submit="true">
+          <button formType="submit" class="btn-normal">
+            <view class="btn-item btn-item__main btn-item-long">
+              <text>帮TA砍一刀</text>
+            </view>
+          </button>
+        </form>
+        <!-- 查看其他砍价活动 -->
+        <form wx:if="{{ showOtherBtn }}" bindsubmit="onTargetBargain" report-submit="true">
+          <button formType="submit" class="btn-normal">
+            <view class="btn-item btn-item__main btn-item-long">
+              <text>查看其他砍价活动</text>
+            </view>
+          </button>
+        </form>
+      </view>
+      <!-- 到期时间 -->
+      <view class="bargain-p" wx:if="{{ task.status }}">
+        <view class="bargain-people" wx:for="{{ taskEndTime }}" wx:key="this">
+          <text>活动还剩 {{ item.dynamic.hou }} : {{ item.dynamic.min }} : {{ item.dynamic.sec }} 结束，快来砍价吧~</text>
+        </view>
+      </view>
+    </view>
+    <!-- 好友助力榜 -->
+    <view class="records-container" wx:if="{{ help_list.length }}">
+      <view class="records">
+        <view class="records-back"></view>
+        <view class="records-content">
+          <view class="records-h2">
+            <text>好友助力榜</text>
+          </view>
+          <view class="friend-help">
+            <view class="records-item" wx:for="{{ help_list }}" wx:key="this">
+              <view class="records-left">
+                <image src="{{ item.user.avatarUrl }}"></image>
+                <text>{{ item.user.nickName }}</text>
+              </view>
+              <view class="records-right semibold">
+                <text class="bold">减 </text>
+                <text class="red">¥{{ item.cut_money }}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 砍价规则 -->
+  <zan-dialog id="zan-base-dialog"></zan-dialog>
+
+</view>

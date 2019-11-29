@@ -1,0 +1,78 @@
+<!-- 商品组 -->
+<view wx:if="{{ data.goodsList.data.length }}" class="diy-sharpGoods" style="background: {{ itemStyle.background }};">
+
+  <view class="sharp-top dis-flex flex-y-center">
+    <view class="sharp-top--left flex-box dis-flex flex-y-center">
+      <view class="sharp-modular dis-flex flex-y-center">
+        <text class="iconfont icon-miaosha-b"></text>
+        <text class="modular-name">秒杀</text>
+      </view>
+      <view class="sharp-active-status">
+        <text>{{ data.active.sharp_modular_text }}</text>
+      </view>
+      <!-- 倒计时 -->
+      <view wx:if="{{ data.active.status == ActiveStatusEnum.STATE_BEGIN.value }}" class="active-count-down">
+        <view class="clock dis-flex">
+          <view class="clock-time">
+            <text>{{ countDownList[0].dynamic.hou }}</text>
+          </view>
+          <view class="clock-symbol">
+            <text>:</text>
+          </view>
+          <view class="clock-time">
+            <text>{{ countDownList[0].dynamic.min }}</text>
+          </view>
+          <view class="clock-symbol">
+            <text>:</text>
+          </view>
+          <view class="clock-time">
+            <text>{{ countDownList[0].dynamic.sec }}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="sharp-top--right">
+      <form bindsubmit="_onTargetSharpIndex" report-submit="true">
+        <button formType="submit" class="btn-normal dis-flex">
+          <view class="sharp-more dis-flex flex-y-center">
+            <text class="sharp-more-text">更多</text>
+            <text class="sharp-more-arrow iconfont icon-msnui-rightmini"></text>
+          </view>
+        </button>
+      </form>
+    </view>
+  </view>
+
+
+  <view class="goods-list display__list clear column__{{ itemStyle.column }}">
+      <view class="goods-item" wx:for="{{ data.goodsList.data }}" wx:key="this" wx:for-item="dataItem">
+        <form bindsubmit="_onTargetGoods" report-submit="true">
+          <button formType="submit" class="btn-normal" data-id="{{ dataItem.sharp_goods_id }}">
+            <view class="goods-item--container">
+              <!-- 单列商品 -->
+              <block wx:if="{{ itemStyle.column == 1 }}">
+              </block>
+              <!-- 两列三列 -->
+              <block v-else>
+                <!-- 商品图片 -->
+                <view class="goods-image">
+                  <image class="image" mode="aspectFill" src="{{ dataItem.goods_image }}"></image>
+                </view>
+                <view class="detail">
+                  <!-- 商品标题 -->
+                  <view wx:if="{{ itemStyle.show.goodsName }}" class="goods-name twolist-hidden">
+                    {{ dataItem.goods_name }}
+                  </view>
+                  <!-- 商品价格 -->
+                  <view class="detail-price onelist-hidden">
+                    <text wx:if="{{ itemStyle.show.seckillPrice }}" class="goods-price f-28 col-m">￥{{ dataItem.goods_sku.seckill_price }}</text>
+                    <text wx:if="{{ itemStyle.show.originalPrice && dataItem.goods_sku.original_price > 0 }}" class="line-price col-9 f-24">￥{{ dataItem.goods_sku.original_price }}</text>
+                  </view>
+                </view>
+              </block>
+            </view>
+          </button>
+        </form>
+      </view>  
+  </view>
+</view>

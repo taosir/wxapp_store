@@ -1,0 +1,42 @@
+<view class="container">
+  <!-- 顶部选项卡 -->
+  <view wx:if="{{ tabList.length > 1 }}" class="swiper-tab dis-flex box-align-center flex-y-center">
+    <block wx:for="{{ tabList }}" wx:key="this">
+      <view class="swiper-tab-item {{ dataType == item.value ? 'on' : ''}} flex-box" data-current="{{ item.value }}" bindtap="swichNav">{{ item.text }}({{ item.total }})</view>
+    </block>
+  </view>
+  <!-- 团队总人数 -->
+  <view class="widget-people f-28 col-9">{{ words.team.words.total_team.value }}：{{ team_total }}人</view>
+  <!-- 我的团队列表 -->
+  <scroll-view scroll-y="{{ true }}" bindscrolltolower="triggerDownLoad" style="height: {{swiperHeight}}px;">
+    <view class="widget-list b-f" wx:if="{{ list.data.length }}">
+      <view class="widget__detail dis-flex flex-x-between" wx:for="{{ list.data }}" wx:key="this">
+        <view class="detail__left dis-flex flex-y-center">
+          <view class="user-avatar">
+            <image src="{{ item.user.avatarUrl }}"></image>
+          </view>
+          <view class="user-info dis-flex flex-dir-column flex-x-center">
+            <view class="user-nickName f-28">{{ item.user.nickName }}</view>
+            <view class="user-time col-9 f-24">{{ item.create_time }}</view>
+          </view>
+        </view>
+        <view class="detail__right dis-flex flex-dir-column flex-x-center flex-y-center">
+          <view class="detail__money">
+            <text class="f-24">￥</text>
+            <text class="f-34">{{ item.user.expend_money }}</text>
+          </view>
+          <view class="detail__member f-22" wx:if="{{ item.dealer }}">
+            {{ item.dealer.first_num + item.dealer.second_num + item.dealer.third_num }}个成员
+          </view>
+        </view>
+      </view>
+      <!-- 没有更多 -->
+      <view wx:if="{{ list.data.length && !isLoading && no_more }}" class="no-more f-30">亲, 没有更多了</view>
+    </view>
+    <!-- 没有记录 -->
+    <view class="no-content" wx:if="{{ !list.data.length && !isLoading }}">
+      <text class="iconfont icon-meiyougengduo"></text>
+      <text class="cont">亲，暂无团队记录哦</text>
+    </view>
+  </scroll-view>
+</view>

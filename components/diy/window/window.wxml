@@ -1,0 +1,45 @@
+<!-- 图片橱窗 -->
+<view class="diy-window" style="background: {{ itemStyle.background }}; padding: {{ itemStyle.paddingTop }}px {{ itemStyle.paddingLeft }}px;">
+  <!-- matrix -->
+  <view wx:if="{{ itemStyle.layout > -1 }}" class="data-list avg-sm-{{ itemStyle.layout }}">
+    <view wx:for="{{ dataList }}" wx:key="this" wx:for-item="dataItem" class="data-item" style="padding: {{ itemStyle.paddingTop }}px {{ itemStyle.paddingLeft }}px;">
+      <view class="item-image" catchtap="navigationTo" data-url="{{ dataItem.linkUrl }}">
+        <image class="image" mode="widthFix" src="{{ dataItem.imgUrl }}"></image>
+      </view>
+    </view>
+  </view>
+  <!-- display -->
+  <view wx:else class="display">
+    <!-- 1 -->
+    <view class="display-left" style="padding: {{ itemStyle.paddingTop }}px {{ itemStyle.paddingLeft }}px;">
+      <image class="image" catchtap="navigationTo" data-url="{{ dataList[0].linkUrl }}" src="{{ dataList[0].imgUrl }}"></image>
+    </view>
+    <!-- 2 -->
+    <view wx:if="{{ dataList.length === 2 }}" class="display-right" style="padding: {{ itemStyle.paddingTop }}px {{ itemStyle.paddingLeft }}px;">
+      <image class="image" catchtap="navigationTo" data-url="{{ dataList[1].linkUrl }}" src="{{ dataList[1].imgUrl }}"></image>
+    </view>
+    <!-- 3 -->
+    <view wx:if="{{ dataList.length === 3 }}" class="display-right">
+      <view class="display-right1" style="padding: {{ itemStyle.paddingTop }}px {{ itemStyle.paddingLeft }}px;">
+        <image class="image" catchtap="navigationTo" data-url="{{ dataList[1].linkUrl }}" src="{{ dataList[1].imgUrl }}"></image>
+      </view>
+      <view class="display-right2" style="padding: {{ itemStyle.paddingTop }}px {{ itemStyle.paddingLeft }}px;">
+        <image class="image" catchtap="navigationTo" data-url="{{ dataList[2].linkUrl }}" src="{{ dataList[2].imgUrl }}"></image>
+      </view>
+    </view>
+    <!-- 4 -->
+    <view wx:if="{{ dataList.length === 4 }}" class="display-right">
+      <view class="display-right1" style="padding: {{ itemStyle.paddingTop }}px {{ itemStyle.paddingLeft }}px;">
+        <image class="image" catchtap="navigationTo" data-url="{{ dataList[1].linkUrl }}" src="{{ dataList[1].imgUrl }}"></image>
+      </view>
+      <view class="display-right2">
+        <view class="left" style="padding: {{ itemStyle.paddingTop }}px {{ itemStyle.paddingLeft }}px;">
+          <image class="image" catchtap="navigationTo" data-url="{{ dataList[2].linkUrl }}" src="{{ dataList[2].imgUrl }}"></image>
+        </view>
+        <view class="right" style="padding: {{ itemStyle.paddingTop }}px {{ itemStyle.paddingLeft }}px;">
+          <image class="image" catchtap="navigationTo" data-url="{{ dataList[3].linkUrl }}" src="{{ dataList[3].imgUrl }}"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

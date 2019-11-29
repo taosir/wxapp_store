@@ -1,0 +1,68 @@
+<!-- 商品组 -->
+<view class="diy-bargainGoods" style="background: {{ itemStyle.background }};">
+
+  <view class="bargain-top dis-flex flex-y-center">
+    <view class="bargain-top--left flex-box dis-flex flex-y-center">
+      <view class="bargain-modular dis-flex flex-y-center">
+        <text class="iconfont icon-kanjia"></text>
+        <text class="modular-name">砍价</text>
+      </view>
+      <view class="bargain-active-status">
+        <text>叫上好友帮你砍价</text>
+      </view>
+    </view>
+    <view class="bargain-top--right">
+      <form bindsubmit="_onTargetBargainIndex" report-submit="true">
+        <button formType="submit" class="btn-normal dis-flex">
+          <view class="bargain-more dis-flex flex-y-center">
+            <text class="bargain-more-text">更多</text>
+            <text class="bargain-more-arrow iconfont icon-msnui-rightmini"></text>
+          </view>
+        </button>
+      </form>
+    </view>
+  </view>
+
+  <view class="goods-item dis-flex" wx:for="{{ dataList }}" wx:key="this" wx:for-item="dataItem">
+    <form bindsubmit="_onTargetGoods" report-submit="true">
+      <button formType="submit" class="btn-normal dis-flex" data-id="{{ dataItem.active_id }}">
+        <view class="goods-item--container dis-flex">
+          <!-- 商品图片 -->
+          <view class="goods-image">
+            <image class="image" src="{{ dataItem.goods_image }}"></image>
+          </view>
+          <view class="goods-info">
+            <!-- 商品名称 -->
+            <view class="goods-name">
+              <text class="twolist-hidden">{{ dataItem.goods_name }}</text>
+            </view>
+            <!-- 参与的用户头像 -->
+            <view wx:if="{{ dataItem.helps_count > 0 }}" class="peoples dis-flex">
+              <view class="user-list dis-flex">
+                <view wx:for="{{ dataItem.helps }}" wx:for-item="help" wx:key="this" class="user-item-avatar">
+                  <image class="image" src="{{ help.user.avatarUrl }}"></image>
+                </view>
+              </view>
+              <view class="people__text">
+                <text>{{ dataItem.helps_count }}人正在砍价</text>
+              </view>
+            </view>
+            <!-- 商品原价 -->
+            <view class="goods-price">
+              <text>￥{{ dataItem.original_price }}</text>
+            </view>
+            <!-- 砍价低价 -->
+            <view class="floor-price">
+              <text class="small">最低￥</text>
+              <text class="big">{{ dataItem.floor_price }}</text>
+            </view>
+            <!-- 操作按钮 -->
+            <view class="opt-touch">
+                <text>去砍价</text>
+            </view>
+          </view>
+        </view>
+      </button>
+    </form>
+  </view>
+</view>

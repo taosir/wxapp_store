@@ -1,0 +1,21 @@
+<!-- 在线客服 -->
+<view class="diy-service" style="right: {{ itemStyle.right }}%; bottom: {{ itemStyle.bottom }}%;">
+  <!-- 拨打电话 -->
+  <block wx:if="{{ params.type == 'phone' }}">
+    <form bindsubmit="_onServiceEvent" report-submit="true">
+      <button formType="submit" class="btn-normal">
+        <view class="service-icon">
+          <image class="image" src="{{ params.image }}"></image>
+        </view>
+      </button>
+    </form>
+  </block>
+  <!-- 在线聊天 -->
+  <block wx:elif="{{ params.type == 'chat' }}">
+    <button open-type="contact" class="btn-normal">
+      <view class="service-icon">
+        <image class="image" src="{{ params.image }}"></image>
+      </view>
+    </button>
+  </block>
+</view>

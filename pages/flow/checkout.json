@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "订单确认",
+  "usingComponents": {
+    "zan-popup": "/components/popup/index",
+    "zan-dialog": "/components/dialog/index",
+    "van-switch": "/components/switch/index",
+    "shortcut": "/components/shortcut/shortcut"
+  }
+}

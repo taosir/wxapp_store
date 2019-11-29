@@ -1,0 +1,1 @@
+@import "/wxParse/wxParse.wxss";page{background:#fff;}.container{padding:30rpx;}.wxParse-img{width:706rpx;}

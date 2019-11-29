@@ -1,0 +1,98 @@
+<block wx:for="{{diyItems}}" wx:for-item="item" wx:for-index="itemIndex" wx:key="this">
+
+  <!-- 搜索框 -->
+  <block wx:if="{{item.type === 'search'}}">
+    <diy-search itemIndex="{{ itemIndex }}" itemStyle="{{ item.style }}" params="{{ item.params }}"></diy-search>
+  </block>
+
+  <!-- banner轮播 -->
+  <block wx:if="{{item.type === 'banner'}}">
+    <diy-banner itemIndex="{{ itemIndex }}" itemStyle="{{ item.style }}" params="{{ item.params }}" dataList="{{ item.data }}"></diy-banner>
+  </block>
+
+  <!-- 单图组 -->
+  <block wx:if="{{item.type === 'imageSingle'}}">
+    <diy-imageSingle itemIndex="{{ itemIndex }}" itemStyle="{{ item.style }}" dataList="{{ item.data }}"></diy-imageSingle>
+  </block>
+
+  <!-- 视频组 -->
+  <block wx:if="{{item.type === 'video'}}">
+    <diy-video itemIndex="{{ itemIndex }}" itemStyle="{{ item.style }}" params="{{ item.params }}"></diy-video>
+  </block>
+
+  <!-- 文章组 -->
+  <block wx:if="{{item.type === 'article'}}">
+    <diy-article itemIndex="{{ itemIndex }}" params="{{ item.params }}" dataList="{{ item.data }}"></diy-article>
+  </block>
+
+  <!-- 头条快报 -->
+  <block wx:if="{{item.type === 'special'}}">
+    <diy-special itemIndex="{{ itemIndex }}" itemStyle="{{ item.style }}" params="{{ item.params }}" dataList="{{ item.data }}"></diy-special>
+  </block>
+
+  <!-- 公告组 -->
+  <block wx:if="{{item.type === 'notice'}}">
+    <diy-notice itemIndex="{{ itemIndex }}" itemStyle="{{ item.style }}" params="{{ item.params }}"></diy-notice>
+  </block>
+
+  <!-- 空白组 -->
+  <block wx:if="{{item.type === 'blank'}}">
+    <diy-blank itemIndex="{{ itemIndex }}" itemStyle="{{ item.style }}"></diy-blank>
+  </block>
+
+  <!-- 辅助线 -->
+  <block wx:if="{{item.type === 'guide'}}">
+    <diy-guide itemIndex="{{ itemIndex }}" itemStyle="{{ item.style }}"></diy-guide>
+  </block>
+
+  <!-- 在线客服 -->
+  <block wx:if="{{item.type === 'service'}}">
+    <diy-service itemIndex="{{ itemIndex }}" itemStyle="{{ item.style }}" params="{{ item.params }}"></diy-service>
+  </block>
+
+  <!-- 富文本 -->
+  <block wx:if="{{item.type === 'richText'}}">
+    <diy-richText itemIndex="{{ itemIndex }}" itemStyle="{{ item.style }}" params="{{ item.params }}"></diy-richText>
+  </block>
+
+  <!-- 导航组 -->
+  <block wx:if="{{item.type === 'navBar'}}">
+    <diy-navBar itemIndex="{{ itemIndex }}" itemStyle="{{ item.style }}" dataList="{{ item.data }}"></diy-navBar>
+  </block>
+
+  <!-- 图片橱窗 -->
+  <block wx:if="{{item.type === 'window'}}">
+    <diy-window itemIndex="{{ itemIndex }}" itemStyle="{{ item.style }}" dataList="{{ item.data }}"></diy-window>
+  </block>
+
+  <!-- 商品组 -->
+  <block wx:if="{{item.type === 'goods'}}">
+    <diy-goods itemIndex="{{ itemIndex }}" itemStyle="{{ item.style }}" dataList="{{ item.data }}"></diy-goods>
+  </block>
+
+  <!-- 优惠券组 -->
+  <block wx:if="{{item.type === 'coupon'}}">
+    <diy-coupon itemIndex="{{ itemIndex }}" itemStyle="{{ item.style }}" dataList="{{ item.data }}"></diy-coupon>
+  </block>
+
+  <!-- 拼团商品 -->
+  <block wx:if="{{item.type === 'sharingGoods'}}">
+    <diy-sharingGoods itemIndex="{{ itemIndex }}" itemStyle="{{ item.style }}" dataList="{{ item.data }}"></diy-sharingGoods>
+  </block>
+
+  <!-- 砍价商品 -->
+  <block wx:if="{{item.type === 'bargainGoods'}}">
+    <diy-bargainGoods itemIndex="{{ itemIndex }}" itemStyle="{{ item.style }}" dataList="{{ item.data }}"></diy-bargainGoods>
+  </block>
+
+  <!-- 秒杀商品 -->
+  <block wx:if="{{item.type === 'sharpGoods'}}">
+    <diy-sharpGoods itemIndex="{{ itemIndex }}" itemStyle="{{ item.style }}" data="{{ item.data }}"></diy-sharpGoods>
+  </block>
+
+  <!-- 线下门店 -->
+  <block wx:if="{{item.type === 'shop'}}">
+    <diy-shop itemIndex="{{ itemIndex }}" itemStyle="{{ item.style }}" dataList="{{ item.data }}"></diy-shop>
+  </block>
+
+</block>

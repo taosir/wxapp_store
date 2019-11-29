@@ -1,0 +1,107 @@
+/* common.wxss */
+
+/* @import "/utils/common.wxss"; */
+
+/* 图片橱窗 */
+
+.diy-window .data-list::after {
+  clear: both;
+  content: " ";
+  display: table;
+}
+
+.diy-window .data-list .data-item {
+  float: left;
+  box-sizing: border-box;
+}
+
+.diy-window .data-list .image {
+  display: block;
+  width: 100%;
+}
+
+/* 分列布局 */
+
+.diy-window .avg-sm-2 > .data-item {
+  width: 50%;
+}
+
+.diy-window .avg-sm-3 > .data-item {
+  width: 33.33333333%;
+}
+
+.diy-window .avg-sm-4 > .data-item {
+  width: 25%;
+}
+
+.diy-window .avg-sm-5 > .data-item {
+  width: 20%;
+}
+
+/* 橱窗样式 */
+
+.diy-window .display {
+  height: 0;
+  width: 100%;
+  margin: 0;
+  padding-bottom: 50%;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.diy-window .display {
+  box-sizing: border-box;
+}
+
+.diy-window .display .image {
+  width: 100%;
+  height: 100%;
+}
+
+.diy-window .display .display-left {
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.diy-window .display .display-right {
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 50%;
+}
+
+.diy-window .display .display-right1 {
+  width: 100%;
+  height: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.diy-window .display .display-right2 {
+  width: 100%;
+  height: 50%;
+  position: absolute;
+  top: 50%;
+  left: 0;
+}
+
+.diy-window .display .display-right2 .left {
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.diy-window .display .display-right2 .right {
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 50%;
+}

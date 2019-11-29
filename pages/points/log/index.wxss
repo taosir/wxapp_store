@@ -1,0 +1,1 @@
+page,.container{background:#fff;}.recharge-order{padding:0 30rpx;}.order-item{font-size:28rpx;padding:20rpx 20rpx;line-height:1.8;border-bottom:1rpx solid rgb(238,238,238);}.rec-status{color:#333;}.order-item .rec-time{color:rgb(160,160,160);font-size:26rpx;}

@@ -1,0 +1,38 @@
+<view class="container" wx:if="{{ userInfo.user_id > 0 }}">
+  <view class="space-upper">
+    <view class="wallet-image">
+      <image src="/images/wallet.png" mode="widthFix"></image>
+    </view>
+    <view class="wallet-account">
+      <view class="wallet-account_balance">
+        <text>{{ userInfo.balance }}</text>
+      </view>
+      <view class="wallet-account_lable">
+        <text>账户余额(元)</text>
+      </view>
+    </view>
+  </view>
+  <view class="space-lower">
+    <view wx:if="{{ setting.is_entrance }}" class="space-lower_item btn-recharge">
+      <form bindsubmit="onTargetRecharge" report-submit="true">
+        <button formType="submit" class="btn-submit">充 值</button>
+      </form>
+    </view>
+    <view class="space-lower_item item-lable dis-flex flex-x-around">
+      <form bindsubmit="onTargetRechargeOrder" report-submit="true">
+        <button formType="submit" class="btn-normal">
+          <view class="lable-text">
+            <text>充值记录</text>
+          </view>
+        </button>
+      </form>
+      <form bindsubmit="onTargetBalanceLog" report-submit="true">
+        <button formType="submit" class="btn-normal">
+          <view class="lable-text">
+            <text>账单详情</text>
+          </view>
+        </button>
+      </form>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,12 @@
+<view class="container">
+
+  <!-- DIY组件 -->
+  <diy-component diyItems="{{ items }}"></diy-component>
+
+  <!-- 底线 -->
+  <view class="title-footer p-r">
+    <text class="f-24 col-9"> ------ 我是有底线的 ------ </text>
+    <!-- <view class="hr"></view> -->
+  </view>
+
+</view>

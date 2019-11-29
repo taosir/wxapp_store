@@ -1,0 +1,55 @@
+<!-- 商品分类tab -->
+<view class="header">
+  <scroll-view scroll-x scroll-left>
+    <view class="cs {{ category_id ==  0 ? 'active' : '' }}" catchtap="onSwitchTab" data-id="0">
+      <text>首页</text>
+    </view>
+    <!-- 商品分类列表 -->
+    <view class="cs {{ item.category_id == category_id ? 'active' : '' }}" catchtap="onSwitchTab" wx:for="{{ categoryList }}" wx:key="this" data-id="{{ item.category_id }}">
+      <text>{{ item.name }}</text>
+    </view>
+  </scroll-view>
+</view>
+<!-- 拼团商品列表 -->
+<view class="cont">
+  <scroll-view bindscrolltolower="bindDownLoad" scroll-y style="height: {{scrollHeight}}px;">
+    <view class="main">
+      <view class="main_goods" wx:for="{{ goodsList.data }}" wx:key="this" catchtap="onTargetGoods" data-id="{{ item.goods_id }}">
+        <!-- 商品图片 -->
+        <view class="main_goods_left">
+          <image src="{{ item.goods_image }}"></image>
+        </view>
+        <view class="main_goods_right">
+          <!-- 商品标题 -->
+          <view class="twolist-hidden">
+            <text class="main_goods_title">{{ item.goods_name }}</text>
+          </view>
+          <!-- 商品信息 -->
+          <view class="main_goods_desc">
+            <view class="">
+              <text class="desc_introduction onelist-hidden">{{ item.selling_point }}</text>
+            </view>
+            <text class="desc_situation">
+            <text class="iconfont icon-pintuan_huaban"></text>
+            <text class="people">{{ item.people }}人团</text>
+            <text class="cl-9">已有{{ item.goods_sales }}人进行拼团</text>
+            </text>
+            <text class="desc_footer">
+            <text class="price_x">¥{{ item.goods_sku.sharing_price }}</text>
+            <text class="price_y cl-9">¥{{ item.goods_sku.line_price }}</text>
+            </text>
+          </view>
+          <button class="settlement">去拼团</button>
+        </view>
+      </view>
+      <view wx:if="{{ no_more }}" class="no-more f-30">亲, 没有更多了</view>
+      <!-- 无数据提供的页面 -->
+      <view wx:if="{{ !isLoading && !goodsList.data.length }}">
+        <view class="no-content">
+          <text class="iconfont icon-meiyougengduo"></text>
+          <text class="cont">亲，暂无拼团商品哦</text>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

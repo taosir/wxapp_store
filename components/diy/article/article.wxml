@@ -1,0 +1,31 @@
+<!-- 文章组 -->
+<view class="diy-article">
+  <view class="article-item show-type__{{ item.show_type }}" wx:for="{{ dataList }}" wx:key="this" catchtap="onTargetDetail" data-id="{{ item.article_id }}">
+    <!-- 小图模式 -->
+    <block wx:if="{{ item.show_type == 10 }}">
+      <view class="article-item__left flex-box">
+        <view class="article-item__title twolist-hidden">
+          <text class="f-30 col-3">{{ item.article_title }}</text>
+        </view>
+        <view class="article-item__footer m-top10">
+          <text class="article-views f-24 col-8">{{ item.show_views }}次浏览</text>
+        </view>
+      </view>
+      <view class="article-item__image">
+        <image class="image" mode="widthFix" src="{{ item.image.file_path }}"></image>
+      </view>
+    </block>
+    <!-- 大图模式 -->
+    <block wx:if="{{ item.show_type == 20 }}">
+      <view class="article-item__title">
+        <text class="f-30 col-3">{{ item.article_title }}</text>
+      </view>
+      <view class="article-item__image m-top20">
+        <image class="image" mode="widthFix" src="{{ item.image.file_path }}"></image>
+      </view>
+      <view class="article-item__footer m-top10">
+        <text class="article-views f-24 col-8">{{ item.show_views }}次浏览</text>
+      </view>
+    </block>
+  </view>
+</view>

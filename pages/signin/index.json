@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "每日签到",
+  "navigationBarTextStyle": "black",
+  "navigationBarBackgroundColor": "#ffffff",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "diy-component": "/components/diy/index"
+  }
+}

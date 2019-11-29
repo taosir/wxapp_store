@@ -1,0 +1,7 @@
+{
+    "navigationBarTitleText": "购物车",
+    "enablePullDownRefresh": true,
+    "usingComponents": {
+      "diy-component": "/components/diy/index"
+    }
+}

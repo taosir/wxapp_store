@@ -1,0 +1,24 @@
+{
+  "component": true,
+  "usingComponents": {
+    "diy-banner": "./banner/banner",
+    "diy-search": "./search/search",
+    "diy-imageSingle": "./imageSingle/imageSingle",
+    "diy-video": "./video/video",
+    "diy-article": "./article/article",
+    "diy-special": "./special/index",
+    "diy-blank": "./blank/blank",
+    "diy-guide": "./guide/guide",
+    "diy-navBar": "./navBar/navBar",
+    "diy-window": "./window/window",
+    "diy-goods": "./goods/goods",
+    "diy-coupon": "./coupon/coupon",
+    "diy-notice": "./notice/notice",
+    "diy-service": "./service/service",
+    "diy-richText": "./richText/richText",
+    "diy-sharingGoods": "./sharingGoods/sharingGoods",
+    "diy-bargainGoods": "./bargainGoods/index",
+    "diy-sharpGoods": "./sharpGoods/index",
+    "diy-shop": "./shop/index"
+  }
+}

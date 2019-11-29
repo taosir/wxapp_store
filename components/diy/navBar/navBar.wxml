@@ -1,0 +1,13 @@
+<!-- 导航组 -->
+<view class="diy-navBar" style="background: {{ itemStyle.background }};">
+  <view class="data-list avg-sm-{{ itemStyle.rowsNum }}">
+    <view class="item-nav" wx:for="{{ dataList }}" wx:key="this" wx:for-item="dataItem">
+      <view class="nav-to" catchtap="navigationTo" data-url="{{ dataItem.linkUrl }}">
+        <view class="item-image">
+          <image class="image" mode="widthFix" src="{{ dataItem.imgUrl }}"></image>
+        </view>
+        <view class="item-text f-24 onelist-hidden" style="color: {{ dataItem.color }};">{{ dataItem.text }}</view>
+      </view>
+    </view>
+  </view>
+</view>

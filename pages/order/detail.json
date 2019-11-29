@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "订单详情",
+  "usingComponents": {
+    "zan-popup": "/components/popup/index",
+    "shortcut": "/components/shortcut/shortcut"
+  }
+}

@@ -1,0 +1,54 @@
+<!-- 分类tab -->
+<view class="header">
+  <scroll-view scroll-x scroll-left style="height: 100%;">
+    <view class="cs {{ category_id ==  0 ? 'active' : '' }}" catchtap="onSwitchTab" data-id="0">
+      <text>全部</text>
+    </view>
+    <!-- 分类列表 -->
+    <view class="cs {{  item.category_id == category_id ? 'active' : '' }}" catchtap="onSwitchTab" wx:for="{{ categoryList }}" wx:key="this" data-id="{{ item.category_id }}">
+      <text>{{ item.name }}</text>
+    </view>
+  </scroll-view>
+</view>
+
+<!-- 文章列表 -->
+<view class="article-list">
+  <scroll-view bindscrolltolower="bindDownLoad" scroll-y style="height: {{scrollHeight}}px;">
+    <view class="article-item show-type__{{ item.show_type }}" wx:for="{{ articleList.data }}" wx:key="this" catchtap="onTargetDetail" data-id="{{ item.article_id }}">
+      <!-- 小图模式 -->
+      <block wx:if="{{ item.show_type == 10 }}">
+        <view class="article-item__left flex-box">
+          <view class="article-item__title twolist-hidden">
+            <text class="dis-block f-30 col-3">{{ item.article_title }}</text>
+          </view>
+          <view class="article-item__footer m-top10">
+            <text class="article-views f-24 col-8">{{ item.show_views }}次浏览</text>
+          </view>
+        </view>
+        <view class="article-item__image">
+          <image mode="widthFix" src="{{ item.image.file_path }}"></image>
+        </view>
+      </block>
+      <!-- 大图模式 -->
+      <block wx:if="{{ item.show_type == 20 }}">
+        <view class="article-item__title twolist-hidden">
+          <text class="dis-block f-30 col-3">{{ item.article_title }}</text>
+        </view>
+        <view class="article-item__image m-top20">
+          <image mode="widthFix" src="{{ item.image.file_path }}"></image>
+        </view>
+        <view class="article-item__footer m-top10">
+          <text class="article-views f-24 col-8">{{ item.show_views }}次浏览</text>
+        </view>
+      </block>
+    </view>
+    <view wx:if="{{ no_more }}" class="no-more f-30">亲, 没有更多了</view>
+    <!-- 无数据提供的页面 -->
+    <view wx:if="{{ !isLoading && !articleList.data.length }}">
+      <view class="no-content">
+        <text class="iconfont icon-meiyougengduo"></text>
+        <text class="cont">亲，暂无内容哦</text>
+      </view>
+    </view>
+  </scroll-view>
+</view>

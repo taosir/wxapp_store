@@ -1,0 +1,46 @@
+<view class="container" wx:if="{{ userInfo.user_id }}">
+  <view class="account-panel dis-flex flex-y-center">
+    <view class="panel-lable">
+      <text>账户余额</text>
+    </view>
+    <view class="panel-balance flex-box">
+      <text>￥{{ userInfo.balance }}</text>
+    </view>
+  </view>
+  <view class="recharge-panel">
+    <view class="recharge-label">
+      <text>充值金额</text>
+    </view>
+    <view class="recharge-plan clear">
+      <block wx:for="{{ planList }}" wx:key="this">
+        <view class="recharge-plan_item {{ selectedPlanId == item.plan_id ? 'active' : '' }}" catchtap="onSelectPlan" data-id="{{ item.plan_id }}">
+          <view class="plan_money">
+            <text>{{ item.money }}</text>
+          </view>
+          <view class="plan_gift" wx:if="{{ item.gift_money > 0 }}">
+            <text>送{{ item.gift_money }}</text>
+          </view>
+        </view>
+      </block>
+    </view>
+    <!-- 手动充值输入框 -->
+    <view class="recharge-input" wx:if="{{ setting.is_custom == '1' }}">
+      <input type="digit" placeholder="请输入充值金额" value="{{ inputValue }}" bindinput="bindMoneyInput" />
+    </view>
+    <!-- 确认按钮 -->
+    <view class="recharge-submit btn-submit">
+      <form bindsubmit="onSubmit" report-submit="true">
+        <button formType="submit" disabled="{{ disabled }}">立即充值</button>
+      </form>
+    </view>
+  </view>
+  <!-- 充值描述 -->
+  <view class="recharge-describe">
+    <view class="recharge-label">
+      <text>充值说明</text>
+    </view>
+    <view class="content">
+      <text space="ensp">{{ setting.describe }}</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,13 @@
+<!-- 搜索框 -->
+<view class="diy-search">
+  <form bindsubmit="onTargetSearch" report-submit="true">
+    <button formType="submit" class="btn-normal">
+      <view class="inner {{ itemStyle.searchStyle }}">
+        <view class="search-input" style="text-align: {{ itemStyle.textAlign }}">
+          <text class="search-icon iconfont icon-sousuo"></text>
+          <text> {{ params.placeholder }}</text>
+        </view>
+      </view>
+    </button>
+  </form>
+</view>

@@ -1,0 +1,290 @@
+<view class="container p-bottom" wx:if="{{ goods_list.length }}">
+
+  <!-- 顶部选项卡 -->
+  <view wx:if="{{ isShowTab }}" class="swiper-tab dis-flex flex-y-center flex-x-around">
+    <view wx:for="{{ DeliveryTypeEnum }}" wx:key="this" class="swiper-tab-item {{ curDelivery == item.value ? 'on' : '' }}" data-current="{{ item.value }}" catchtap="onSwichDelivery">
+      {{ item.name }}
+    </view>
+  </view>
+
+  <!-- 快递配送：配送地址 -->
+  <view wx:if="{{ curDelivery == DeliveryTypeEnum.EXPRESS.value }}" catchtap="onSelectAddress" class="flow-delivery">
+    <view class="flow-delivery__detail dis-flex flex-y-center">
+      <view class="detail-location dis-flex">
+        <text class="iconfont icon-dingwei"></text>
+      </view>
+      <view class="detail-content flex-box">
+        <block wx:if="{{ address.address_id }}">
+          <view class="detail-content__title dis-flex">
+            <text class="f-30">{{ address.name }}</text>
+            <text class="detail-content__title-phone f-28">{{ address.phone }}</text>
+          </view>
+          <view class="detail-content__describe">
+            <text class="col-7">{{address.region.province}} {{address.region.city}} {{address.region.region}} {{address.detail}}</text>
+          </view>
+        </block>
+        <block wx:else>
+          <view class="detail-content__describe dis-flex">
+            <text class="col-6">请选择配送地址</text>
+          </view>
+        </block>
+      </view>
+      <view class="detail-arrow dis-flex">
+        <text class="iconfont icon-xiangyoujiantou user-orderJtou"></text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 上门自提：自提门店 -->
+  <block wx:if="{{ curDelivery == DeliveryTypeEnum.EXTRACT.value }}">
+    <view catchtap="onSelectExtractPoint" class="flow-delivery">
+      <view class="flow-delivery__detail dis-flex flex-y-center">
+        <view class="detail-location dis-flex">
+          <text class="iconfont icon-dingwei"></text>
+        </view>
+        <view class="detail-content flex-box">
+          <block wx:if="{{ extract_shop.shop_id }}">
+            <view class="detail-content__title dis-flex">
+              <text class="f-30">{{ extract_shop.shop_name }}</text>
+            </view>
+            <view class="detail-content__describe">
+              <text class="col-7">{{extract_shop.region.province}} {{extract_shop.region.city}} {{extract_shop.region.region}} {{extract_shop.address}}</text>
+            </view>
+          </block>
+          <block wx:else>
+            <view class="detail-content__describe dis-flex">
+              <text class="col-6">请选择自提点</text>
+            </view>
+          </block>
+        </view>
+        <view class="detail-arrow dis-flex">
+          <text class="iconfont icon-xiangyoujiantou user-orderJtou"></text>
+        </view>
+      </view>
+    </view>
+    <!-- 填写收件人信息 -->
+    <view class="flow-extract-contact m-top20 b-f" wx:if="{{extract_shop.is_show_table_info == 1 }}">
+      <view class="contact-item dis-flex">
+        <view class="item_label dis-flex flex-x-end flex-y-center">
+          <text>联系人：</text>
+        </view>
+        <view class="item_ipt flex-box dis-flex flex-y-center">
+          <input placeholder="请填写联系人" bindinput="onInputLinkman" value="{{ linkman }}"></input>
+        </view>
+      </view>
+      <view class="contact-item dis-flex">
+        <view class="item_label dis-flex flex-x-end flex-y-center">
+          <text>联系电话：</text>
+        </view>
+        <view class="item_ipt flex-box dis-flex flex-y-center">
+          <input placeholder="请填写联系电话" bindinput="onInputPhone" value="{{ phone }}"></input>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <!-- 商品列表 -->
+  <view class="m-top20">
+    <view class="checkout_list" wx:for="{{ goods_list }}" wx:key="this">
+      <form bindsubmit="onTargetGoods" data-id="{{ item.goods_id }}" report-submit="true">
+        <button formType="submit" class="btn-normal">
+          <view class="flow-shopList dis-flex" data-index="{{ index }}">
+            <!-- 商品图片 -->
+            <view class="flow-list-left">
+              <image mode="scaleToFill" src="{{ item.goods_image }}"></image>
+            </view>
+            <view class="flow-list-right flex-box">
+              <!-- 商品名称 -->
+              <text class="f-30 col-3 twolist-hidden">{{ item.goods_name }}</text>
+              <!-- 商品sku信息 -->
+              <text class="f-24 col-7">{{ item.goods_sku.goods_attr }}</text>
+              <!-- 商品数量和单价 -->
+              <view class="flow-list-cont dis-flex flex-x-between flex-y-center">
+                <text class="small">×{{ item.total_num }}</text>
+                <text class="flow-cont {{ item.is_user_grade ? 'price-delete' : '' }}">￥{{ item.goods_price }}</text>
+              </view>
+              <!-- 会员折扣价 -->
+              <view wx:if="{{ item.is_user_grade }}" class="grade-price">
+                <text>会员折扣价：￥{{ item.grade_goods_price }}</text>
+              </view>
+            </view>
+          </view>
+        </button>
+      </form>
+    </view>
+
+    <view class="flow-num-box b-f padding-box">
+      <text>共{{order_total_num}}件商品，合计：</text>
+      <text class="flow-money col-m">￥{{ order_total_price }}</text>
+    </view>
+
+  </view>
+
+  <!-- 商品金额 -->
+  <view class="flow-all-money b-f m-top20">
+    <view class="flow-all-list dis-flex">
+      <text class="flex-five">订单总金额：</text>
+      <view class="flex-five t-r">
+        <text class="col-m">￥{{ order_total_price }}</text>
+      </view>
+    </view>
+    <!-- 优惠券 -->
+    <view class="flow-all-list dis-flex">
+      <text class="flex-five">优惠券：</text>
+      <view class="flex-five t-r">
+        <view catchtap="onTogglePopupCoupon">
+          <block wx:if="{{ coupon_list.length > 0 }}">
+            <text class="col-m" wx:if="{{ coupon_id > 0 }}">-￥{{ coupon_money }}</text>
+            <text class="col-m" wx:else>有{{ coupon_list.length }}张优惠券可用</text>
+            <text class="iconfont icon-xiangyoujiantou user-orderJtou"></text>
+          </block>
+          <text wx:else class="">无优惠券可用</text>
+        </view>
+      </view>
+    </view>
+    <!-- 积分抵扣 -->
+    <view wx:if="{{ is_allow_points }}" class="points flow-all-list dis-flex flex-y-center">
+      <view class="block-left flex-five">
+        <form class="flex-five" bindsubmit="onShowPoints" report-submit="true">
+          <button formType="submit" class="btn-normal">
+            <text class="title">可用{{ setting.points_name }}抵扣：</text>
+            <text class="iconfont icon-help"></text>
+          </button>
+        </form>
+      </view>
+      <view class="flex-five dis-flex flex-x-end flex-y-center">
+        <text class="points-money col-m">￥{{ points_money }}</text>
+        <van-switch checked="{{ isUsePoints }}" size="48rpx" active-color="#07c160" bind:change="onTriggerPoints" />
+      </view>
+    </view>
+    <!-- 配送费用 -->
+    <view wx:if="{{ curDelivery == DeliveryTypeEnum.EXPRESS.value }}" class="dis-flex flow-all-list">
+      <text class="flex-five">配送费用：</text>
+      <view class="flex-five t-r">
+        <view wx:if="{{address.address_id}}">
+          <text class="col-m" wx:if="{{ intra_region }}">+￥{{ express_price }}</text>
+          <text wx:else>不在配送范围</text>
+        </view>
+        <view wx:else>
+          <text class="col-7">请先选择配送地址</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 支付方式 -->
+  <view class="pay-method flow-all-money b-f m-top20">
+    <view class="flow-all-list dis-flex">
+      <text class="flex-five">支付方式</text>
+    </view>
+    <form bindsubmit="onSelectPayType" data-value="{{ PayTypeEnum.WECHAT.value }}" report-submit="true">
+      <button formType="submit" class="btn-normal">
+        <view class="pay-item dis-flex flex-x-between">
+          <view class="item-left dis-flex flex-y-center">
+            <view class="item-left_icon wechat">
+              <text class="iconfont icon-weixinzhifu"></text>
+            </view>
+            <view class="item-left_text">
+              <text>{{ PayTypeEnum.WECHAT.name }}</text>
+            </view>
+          </view>
+          <view class="item-right col-m" wx:if="{{ curPayType == PayTypeEnum.WECHAT.value }}">
+            <text class="iconfont icon-duihao"></text>
+          </view>
+        </view>
+      </button>
+    </form>
+    <form bindsubmit="onSelectPayType" data-value="{{ PayTypeEnum.BALANCE.value }}" report-submit="true">
+      <button formType="submit" class="btn-normal">
+        <view class="pay-item dis-flex flex-x-between">
+          <view class="item-left dis-flex flex-y-center">
+            <view class="item-left_icon balance">
+              <text class="iconfont icon-qiandai"></text>
+            </view>
+            <view class="item-left_text">
+              <text>{{ PayTypeEnum.BALANCE.name }}</text>
+            </view>
+          </view>
+          <view class="item-right col-m" wx:if="{{ curPayType == PayTypeEnum.BALANCE.value }}">
+            <text class="iconfont icon-duihao"></text>
+          </view>
+        </view>
+      </button>
+    </form>
+  </view>
+
+  <!-- 买家留言 -->
+  <view class="flow-all-money b-f m-top20">
+    <view class="ipt-wrapper dis-flex flow-all-list">
+      <input bindinput="bindRemark" placeholder="选填：买家留言（50字以内）" value="{{remark}}"></input>
+    </view>
+  </view>
+
+  <!-- 提交订单 -->
+  <view class="flow-fixed-footer b-f m-top10">
+    <view class="dis-flex chackout-box">
+      <view class="chackout-left pl-12">实付款：
+        <text class="col-m">￥{{ order_pay_price }}</text>
+      </view>
+      <view catchtap="onSubmitOrder" class="chackout-right">
+        <text class="flow-btn f-32">提交订单</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 优惠券弹出框 -->
+  <zan-popup show="{{ showBottomPopup }}" type="bottom" bindclose="onTogglePopupCoupon">
+    <view class="popup__coupon">
+      <view class="coupon__title f-32">选择优惠券</view>
+
+      <!-- 优惠券列表 -->
+      <view class="coupon-list">
+        <scroll-view scroll-y="{{ true }}" style="height: 565rpx;">
+          <view class="coupon-item" wx:for="{{ coupon_list }}" wx:key="this">
+            <view class="item-wrapper color__{{ item.color.text }}" catchtap="onSelectCoupon" data-index="{{ index }}" data-id="{{ item.user_coupon_id }}">
+              <view class="coupon-type">{{ item.coupon_type.text }}</view>
+              <view class="tip dis-flex flex-dir-column flex-x-center">
+                <view wx:if="{{ item.coupon_type.value == 10 }}">
+                  <text class="f-30">￥</text>
+                  <text class="money">{{ item.reduce_price }}</text>
+                </view>
+                <text class="money" wx:if="{{ item.coupon_type.value == 20 }}">{{ item.discount }}折</text>
+                <text class="pay-line">满{{ item.min_price }}元可用</text>
+              </view>
+              <view class="split-line"></view>
+              <view class="content dis-flex flex-dir-column flex-x-between">
+                <view class="title">{{ item.name }}</view>
+                <view class="bottom dis-flex flex-y-center">
+                  <view class="time flex-box">
+                    <text>有效期：{{ item.start_time.text }}~{{ item.end_time.text }}</text>
+                  </view>
+                  <!-- <view class="state flex-box">
+                    <text>-￥{{ item.reduced_price }}</text>
+                  </view> -->
+                </view>
+              </view>
+            </view>
+          </view>
+        </scroll-view>
+      </view>
+
+      <!-- 不使用优惠券 -->
+      <view class="coupon__do_not dis-flex flex-y-center flex-x-center">
+        <view class="control dis-flex flex-y-center flex-x-center" catchtap="onNotUseCoupon">
+          <text class="f-26">不使用优惠券</text>
+        </view>
+      </view>
+      <!-- <view class="footer-fixed f-32">
+        <view catchtap="onTogglePopupCoupon" class="order-bt" style="width:100%">关闭</view>
+      </view> -->
+    </view>
+  </zan-popup>
+
+  <!-- 积分说明弹框 -->
+  <zan-dialog id="zan-base-dialog"></zan-dialog>
+
+
+</view>
+
+<!-- 快捷导航 -->
+<!-- <shortcut></shortcut> -->

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "资讯详情",
+  "usingComponents": {
+    "shortcut": "/components/shortcut/shortcut"
+  }
+}

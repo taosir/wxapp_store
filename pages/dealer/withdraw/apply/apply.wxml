@@ -1,0 +1,101 @@
+<view class="container b-f">
+
+  <!-- 头部背景图 -->
+  <view class="dealer-bg">
+    <image mode="widthFix" src="{{ background }}"></image>
+  </view>
+
+  <view class="widget-body b-f dis-flex flex-dir-column flex-y-center">
+    <form bindsubmit="formSubmit" report-submit="true">
+      <!-- 提现佣金 -->
+      <view class="widget widget__capital m-top20 b-f dis-flex flex-dir-column">
+        <view class="capital__item dis-flex flex-x-between flex-y-center">
+          <view class="item__left">{{ words.withdraw_apply.words.capital.value }}：</view>
+          <view class="item__right c-violet">
+            <text class="f-24">￥</text>
+            <text class="f-34">{{ dealer.money }}</text>
+          </view>
+        </view>
+        <view class="capital__item dis-flex flex-y-center">
+          <view class="item__left">{{ words.withdraw_apply.words.money.value }}：</view>
+          <view class="item__right flex-box">
+            <input name="money" placeholder="{{ words.withdraw_apply.words.money_placeholder.value }}" value="{{name}}"></input>
+          </view>
+        </view>
+      </view>
+      <!-- 最低提现金额 -->
+      <view class="capital__lowest m-top20 f-24 col-7 t-r">
+        提示：{{ words.withdraw_apply.words.min_money.value }}{{ settlement.min_money }}元
+      </view>
+
+      <!-- 提现方式 -->
+      <view class="widget widget__form m-top20 b-f dis-flex flex-dir-column">
+        <view class="form__title f-28">提现方式</view>
+        <view class="form__box">
+          <block wx:for="{{ settlement.pay_type }}" wx:key="this">
+            <block wx:if="{{ item == 10 }}">
+              <!-- 微信支付 -->
+              <view class="form__field dis-flex flex-y-center">
+                <view class="form__radio dis-flex flex-y-center" catchtap="toggleChecked" data-payment="10">
+                  <text class="radio__icon {{ payment == 10 ? 'c-violet' : 'col-bb' }} iconfont icon-radio"></text>
+                  <text class="f-28">微信支付</text>
+                </view>
+              </view>
+            </block>
+            <block wx:if="{{ item == 20 }}">
+              <!-- 支付宝 -->
+              <view class="form__field dis-flex flex-y-center">
+                <view class="form__radio dis-flex flex-y-center" catchtap="toggleChecked" data-payment="20">
+                  <text class="radio__icon {{ payment == 20 ? 'c-violet' : 'col-bb' }} iconfont icon-radio"></text>
+                  <text class="f-28">支付宝</text>
+                </view>
+              </view>
+              <block wx:if="{{ payment == 20 }}">
+                <view class="form__field dis-flex flex-y-center">
+                  <view class="field-input flex-box">
+                    <input name="alipay_name" placeholder="请输入姓名"></input>
+                  </view>
+                </view>
+                <view class="form__field dis-flex flex-y-center">
+                  <view class="field-input flex-box">
+                    <input name="alipay_account" placeholder="请输入支付宝账号"></input>
+                  </view>
+                </view>
+              </block>
+            </block>
+            <block wx:if="{{ item == 30 }}">
+              <!-- 银行卡 -->
+              <view class="form__field dis-flex flex-y-center">
+                <view class="form__radio dis-flex flex-y-center" catchtap="toggleChecked" data-payment="30">
+                  <text class="radio__icon {{ payment == 30 ? 'c-violet' : 'col-bb' }} iconfont icon-radio"></text>
+                  <text class="f-28">银行卡</text>
+                </view>
+              </view>
+              <block wx:if="{{ payment == 30 }}">
+                <view class="form__field dis-flex flex-y-center">
+                  <view class="field-input flex-box">
+                    <input name="bank_name" placeholder="请输入姓名" value=""></input>
+                  </view>
+                </view>
+                <view class="form__field dis-flex flex-y-center">
+                  <view class="field-input flex-box">
+                    <input name="bank_account" placeholder="请输入开户行名称/地址" value=""></input>
+                  </view>
+                </view>
+                <view class="form__field dis-flex flex-y-center">
+                  <view class="field-input flex-box">
+                    <input name="bank_card" placeholder="请输入银行卡号" value=""></input>
+                  </view>
+                </view>
+              </block>
+            </block>
+          </block>
+        </view>
+      </view>
+      <!-- 提交申请 -->
+      <view class="form-submit dis-flex flex-x-center">
+        <button formType="submit" disabled="{{ disabled }}">{{ words.withdraw_apply.words.submit.value }}</button>
+      </view>
+    </form>
+  </view>
+</view>

@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "拼单详情",
+  "usingComponents": {
+    "zan-dialog": "/components/dialog/index",
+    "zan-popup": "/components/popup/index",
+    "shortcut": "/components/shortcut/shortcut"
+  }
+}

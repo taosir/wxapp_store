@@ -1,0 +1,96 @@
+<view class="sign-container">
+
+  <view class='sign-com'>  
+
+    <view class="point-check">
+      <form bindsubmit="onTargetPoints" report-submit="true">
+        <button formType="submit" class="btn-normal">
+            <text class="iconfont icon-jifen"> 查看积分 </text>
+        </button>
+      </form>
+    </view>
+
+    <view class='thead'>
+      <view class='tt'> 您已连续签到 </view>
+        <view class='mm'>
+          <label class='n'> {{signNum}} </label> 天
+        </view>  
+      <!-- <view class='pp'>连续签到领更多积分</view> -->
+      <view class='pp'>上次签到时间:{{lastTime}}</view>
+    </view>
+
+    <view class='modle'>
+
+        <view class='mol'>
+          <view class='mol-line'></view>
+            <view class='mol-ites'>
+              <view class="ite {{signNum>=min?'hover':''}}" data-n='{{min}}' >
+                <label class='n'> +{{min<7?1:3}} </label>  <!-- 若签到天数小于7天，则每天签到得1积分，若大于或等于7天，则每天签到得3积分 -->
+              </view>
+              <view class="ite {{signNum>=min+1?'hover':''}}" data-n='{{min+1}}'>
+                <label class='n'> +{{min+1<7?1:3}} </label>
+              </view>
+                <view class="ite {{signNum>=min+2?'hover':''}}" data-n='{{min+2}}'>
+                <label class='n'> +{{min+2<7?1:3}} </label>
+              </view>
+              <view class="ite {{signNum>=min+3?'hover':''}}" data-n='{{min+3}}'>
+                <label class='n'> +{{min+3<7?1:3}} </label>
+              </view>
+              <view class="ite {{signNum>=min+4?'hover':''}}" data-n='{{min+4}}'>
+                <label class='n'> +{{min+4<7?1:3}} </label>
+              </view>
+              <view class="ite {{signNum>=min+5?'hover':''}}" data-n='{{min+5}}'>
+                <label class='n'> +{{min+5<7?1:3}} </label>
+              </view>
+              <view class="ite {{signNum>=min+6?'hover':''}}" data-n='{{max}}'>
+                <label class='n'> +{{min+6<7?1:3}} </label>
+              </view>
+            </view>
+        </view>
+
+        <view class='moday'>
+          <label class='dd'>{{min}}天</label>
+          <label class='dd'>{{min+1}}天</label>
+          <label class='dd'>{{min+2}}天</label>
+          <label class='dd'>{{min+3}}天</label>
+          <label class='dd'>{{min+4}}天</label>
+          <label class='dd'>{{min+5}}天</label>
+          <label class='dd'>{{min+6}}天</label>
+        </view>
+      </view>
+
+    <view class="sign-tips">
+      连续签到将获得更多积分
+    </view>
+
+    <view class='sign-btn'>
+      <view wx:if="{{ signState }}">
+        <button type='button' class='btn-signed' bindtap='bindSignIn' data-num="{{signNum}}" disabled='{{signState}}'
+          data-min="{{min}}" data-max="{{max}}" data-be="{{be}}">
+          今日已签到
+        </button>
+      </view>
+      <view wx:else>
+        <button type='button' class='btn' bindtap='bindSignIn' data-num="{{signNum}}" disabled='{{signState}}'
+          data-min="{{min}}" data-max="{{max}}" data-be="{{be}}">
+          签 到
+        </button>    
+      </view>
+    </view>
+    
+  </view>
+
+  <view class="title-footer p-r">
+    <text class="f-26 f-w col-4"> ··· 猜您喜欢 ··· </text>
+  </view>
+
+  <view class="more-component">
+    <diy-component diyItems="{{items}}" ></diy-component>
+  </view>
+
+    <!-- 底线 -->
+  <view class="title-footer p-r">
+    <text class="f-24 col-9"> ------ 我是有底线的 ------ </text>
+  </view>
+
+</view>

@@ -1,0 +1,1 @@
+const App = getApp(); Page({ data: { options: {}, express: {}, }, onLoad: function (options) { this.getExpressDynamic(options.order_id) }, getExpressDynamic: function (order_id) { let _this = this; App._get('sharing.order/express', { order_id }, function (result) { _this.setData(result.data) }, function () { wx.navigateBack() }) }, })

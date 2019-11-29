@@ -1,0 +1,6 @@
+<!-- 富文本 -->
+<import src="../../../wxParse/wxParse.wxml"></import>
+
+<view class="diy-richText" style="padding: {{ itemStyle.paddingTop }}px {{ itemStyle.paddingLeft }}px; background: {{ itemStyle.background }};">
+  <template is="wxParse" data="{{ wxParseData:contentT.nodes }}"></template>
+</view>

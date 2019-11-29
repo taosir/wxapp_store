@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "个人中心",
+  "navigationBarTextStyle":"white",
+  "navigationBarBackgroundColor":"#ff533c",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "diy-component": "/components/diy/index"
+  }    
+}

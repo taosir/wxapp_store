@@ -1,0 +1,92 @@
+<view class="container p-bottom">
+
+  <view class="flow-list">
+    <view wx:if="{{goods_list.length}}">
+      <view class="cart-edit-wrap dis-flex flex-x-end">
+        <text wx:if="{{ action === 'complete' }}" catchtap="switchAction" class="cart-edit-btn f-30" data-action="edit">编辑</text>
+        <text wx:if="{{ action === 'edit' }}" catchtap="switchAction" class="cart-edit-complete f-30" data-action="complete">完成</text>
+      </view>
+      <view wx:for="{{goods_list}}" wx:key="this">
+        <view class="dish-item dis-flex flex-y-center" data-index="{{index}}" style="{{item.txtStyle}}">
+          <!-- 选择框 -->
+          <view class="dish-item-radio" catchtap="onChecked" data-index="{{ index }}">
+            <label class="radio">
+              <radio checked="{{ item.checked }}" color="#ff495e"></radio>
+            </label>
+          </view>
+          <view class="dish-item-wrp dis-flex flex-box">
+            <!-- 商品图片 -->
+            <navigator hover-class="none" url="../goods/index?goods_id={{item.goods_id}}">
+              <view class="dish-item-pic">
+                <image mode="aspectFill" class="image" src="{{ item.goods_image }}"></image>
+              </view>
+            </navigator>
+            <!-- 商品信息 -->
+            <view class="dish-item-info flex-box">
+              <navigator hover-class="none" url="../goods/index?goods_id={{item.goods_id}}">
+                <view class="goods-name">
+                  <text class="twolist-hidden f-28 col-3">{{item.goods_name}}</text>
+                </view>
+                <view class="goods-attr dis-flex">
+                  <text class="col-7 f-24">{{item.goods_sku.goods_attr}}</text>
+                </view>
+              </navigator>
+              <view class="dis-flex flex-x-between m-top20">
+                <!-- 商品价格 -->
+                <view class="wx-goods_price dis-flex flex-y-center">
+                  <text wx:if="{{ item.is_user_grade }}" class="dish-item-money">￥{{ item.grade_goods_price }}</text>
+                  <text wx:else class="dish-item-money">￥{{ item.goods_price }}</text>
+                </view>
+                <!-- 数量选择器 -->
+                <view class="selectNumber">
+                  <button catchtap="onSubCount" class="default minus {{item.total_num>0?'':' default-active'}}" data-index="{{index}}" data-sku-id="{{item.goods_sku_id}}" type="default">-</button>
+                  <input bindinput="import" disabled="{{true}}" type="number" value="{{item.total_num}}" class="number" ></input>
+                  <button catchtap="onAddCount" class="default plus " data-index="{{index}}" data-sku-id="{{item.goods_sku_id}}" type="default">+</button>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <!-- 底部操作栏 -->
+      <view class="cart-tab-wrp">
+        <view class="cart-item-total cart-tab-item dis-flex flex-y-center">
+          <view class="checked-all">
+            <label catchtap="onCheckedAll" class="radio dis-flex flex-y-center">
+              <radio class="margin-right: 10rpx;" checked="{{ checkedAll }}" color="#ff495e"></radio>
+              <text class="f-28">全选</text>
+            </label>
+          </view>
+          <view wx:if="{{ action === 'complete' }}" class="cart-item-total-price dis-flex">
+            <text class="f-28 col-m">合计：￥{{cartTotalPrice}}</text>
+          </view>
+        </view>
+        <view class="cart-tab-item_1">
+          <view wx:if="{{ action === 'complete' }}" catchtap="submit" class="cart-tab-item-btn">去结算</view>
+          <view wx:if="{{ action === 'edit' }}" catchtap="onDelete" class="cart-tab-item-btn">删除</view>
+        </view>
+      </view>
+    </view>
+    <view wx:else>
+      <view class="no-content">
+        <text class="iconfont icon-meiyougengduo"></text>
+        <text class="cont">亲，购物车还没有商品哦</text>
+        <view catchtap="goShopping" class="flow-btn-min">去购物</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="title-footer p-r">
+    <text class="f-26 f-w col-4"> ··· 为您推荐 ··· </text>
+  </view>
+
+  <view class="more-component">
+    <diy-component diyItems="{{items}}" ></diy-component>
+  </view>
+
+    <!-- 底线 -->
+  <view class="title-footer p-r">
+    <text class="f-24 col-9"> ------ 我是有底线的 ------ </text>
+  </view>
+  
+</view>

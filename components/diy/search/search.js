@@ -1,0 +1,1 @@
+const App = getApp(); Component({ options: { addGlobalClass: true, }, properties: { itemIndex: String, itemStyle: Object, params: Object }, methods: { onTargetSearch(e) { App.saveFormId(e.detail.formId); App.navigationTo('pages/search/index') }, } })

@@ -1,0 +1,1 @@
+const App = getApp(); Component({ options: { addGlobalClass: true, }, properties: { itemIndex: String, itemStyle: Object, params: Object, dataList: Object }, methods: { navigationTo: function (e) { App.navigationTo(e.currentTarget.dataset.url) }, } })

@@ -1,0 +1,20 @@
+<import src="../../../wxParse/wxParse.wxml"></import>
+<view class="container b-f p-b">
+  <view class="article-title">
+    <text class="f-32">{{ detail.article_title }}</text>
+  </view>
+  <view class="article-little dis-flex flex-x-between m-top10">
+    <view class="article-little__left">
+      <text class="article-views f-24 col-8">{{ detail.show_views }}次浏览</text>
+    </view>
+    <view class="article-little__right">
+      <text class="article-views f-24 col-8">{{ detail.view_time }}</text>
+    </view>
+  </view>
+  <view class="article-content m-top20">
+    <template is="wxParse" data="{{wxParseData:content.nodes}}"></template>
+  </view>
+</view>
+
+<!-- 快捷导航 -->
+<shortcut></shortcut>

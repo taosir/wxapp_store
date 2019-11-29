@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "选择自提门店",
+    "usingComponents": {
+      "zan-toptips": "../../../components/toptips/index"
+    }
+}

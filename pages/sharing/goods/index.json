@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "商品详情",
+  "usingComponents": {
+    "zan-actionsheet": "/components/actionsheet/index",
+    "zan-popup": "/components/popup/index",
+    "zan-dialog": "/components/dialog/index",
+    "shortcut": "/components/shortcut/shortcut"
+  }
+}

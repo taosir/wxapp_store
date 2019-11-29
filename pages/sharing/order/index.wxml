@@ -1,0 +1,172 @@
+<view class="container p-bottom">
+  <!-- tab栏 -->
+  <view class="header f-28 col-3">
+    <view catchtap="bindHeaderTap" class="{{dataType==='all'?'active':''}}" data-type="all">
+      <text>全部</text>
+    </view>
+    <view bindtap="bindHeaderTap" class="{{dataType==='payment'?'active':''}}" data-type="payment">
+      <text>待付款</text>
+    </view>
+    <view bindtap="bindHeaderTap" class="{{dataType==='sharing'?'active':''}}" data-type="sharing">
+      <text>拼团中</text>
+    </view>
+    <view bindtap="bindHeaderTap" class="{{dataType==='delivery'?'active':''}}" data-type="delivery">
+      <text>待发货</text>
+    </view>
+    <view bindtap="bindHeaderTap" class="{{dataType==='received'?'active':''}}" data-type="received">
+      <text>待收货</text>
+    </view>
+    <view catchtap="onTargetRefund">
+      <text>售后</text>
+    </view>
+  </view>
+  <!-- 订单列表 -->
+  <view class="goods-detail-box">
+    <scroll-view bindscrolltolower="bindDownLoad" scroll-y style="height: {{scrollHeight}}px; width: 750rpx;margin-top:88rpx;">
+      <view class="wrapper" wx:if="{{list.data.length > 0}}">
+        <view class="m-top20" wx:for="{{list.data}}" wx:key="this">
+          <form bindsubmit="navigateToDetail" report-submit="true">
+            <button class="btn-normal" formType="submit" data-id="{{ item.order_id }}">
+              <!-- 订单状态 -->
+              <view class="order-box b-f">
+                <view class="order-header dis-flex">
+                  <text class="col-m">{{ item.state_text }}</text>
+                </view>
+              </view>
+              <!-- 商品信息 -->
+              <view class="order-box order-img_list">
+                <view class="detail-goods b-f dis-flex flex-dir-row">
+                  <view class="left">
+                    <image class="goods-image" src="{{ item.goods[0].image.file_path }}"></image>
+                  </view>
+                  <view class="right dis-flex flex-box flex-dir-column flex-x-around">
+                    <view class="goods-name">
+                      <text class="twolist-hidden">{{ item.goods[0].goods_name }}</text>
+                    </view>
+                    <view class="dis-flex col-9 f-24">
+                      <view class="flex-box">{{ item.goods[0].goods_attr }}</view>
+                      <text class="t-r">×{{ item.goods[0].total_num }}</text>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </button>
+            <!-- 底部区 -->
+            <view class="order-box b-f">
+              <view class="order-btn dis-flex">
+                <view class="order-left dis-flex flex-y-center">
+                  <view class="text">
+                    <text>合计：</text>
+                    <text class="col-m">￥{{item.pay_price}}</text>
+                  </view>
+                </view>
+                <view class="order-right flex-box">
+                  <view class="btn-group clear" wx:if="{{ item.order_status.value != 20 }}">
+                    <!-- 未支付取消订单 -->
+                    <view wx:if="{{ item.pay_status.value==10 }}" class="btn-group-item">
+                      <view catchtap="cancelOrder" class="btn-default" data-id="{{item.order_id}}">取消</view>
+                    </view>
+                    <!-- 已支付取消订单 -->
+                    <view wx:if="{{ item.order_status.value!=21 && item.order_type.value==10 && item.pay_status.value==20 && item.delivery_status.value==10 }}" class="btn-group-item">
+                      <view catchtap="cancelOrder" class="btn-default" data-id="{{item.order_id}}">申请取消</view>
+                    </view>
+                    <view wx:if="{{ item.order_status.value==21 }}" class="f-28 col-8 t-r">取消申请中</view>
+                    <!-- 订单付款 -->
+                    <view wx:if="{{item.pay_status.value==10}}" class="btn-group-item">
+                      <view catchtap="onPayOrder" class="btn-main" data-id="{{item.order_id}}">付款</view>
+                    </view>
+                    <!-- 订单核销码 -->
+                    <view wx:if="{{ item.pay_status.value==20 && item.delivery_type.value == DeliveryTypeEnum.EXTRACT.value && item.delivery_status.value == 10 && (item.order_type.value==20 ? item.active.status.value==20 : true ) && item.order_status.value!=21 }}" class="btn-group-item">
+                      <view catchtap="onExtractQRCode" class="btn-main" data-id="{{item.order_id}}">
+                        <text class="iconfont icon-qr-extract"></text>
+                        <text class="m-l-10">核销码</text>
+                      </view>
+                    </view>
+                    <!-- 确认收货 -->
+                    <view wx:if="{{item.delivery_status.value==20 && item.receipt_status.value == 10}}" class="btn-group-item">
+                      <view catchtap="receipt" class="btn-main" data-id="{{item.order_id}}">确认收货</view>
+                    </view>
+                    <!-- 订单评价 -->
+                    <view wx:if="{{item.order_status.value==30 && item.is_comment==0}}" class="btn-group-item">
+                      <view catchtap="comment" class="btn-default" data-id="{{item.order_id}}">评价</view>
+                    </view>
+                    <!-- 拼单详情 -->
+                    <view wx:if="{{item.order_type.value==20 && item.pay_status.value==20}}" class="btn-group-item">
+                      <form bindsubmit="navigateToSharingActive" report-submit="true">
+                        <button class="btn-normal" formType="submit" data-id="{{ item.active_id }}">
+                          <view class="btn-default">拼单详情</view>
+                        </button>
+                      </form>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </form>
+        </view>
+      </view>
+      <view wx:if="{{ no_more }}" class="no-more f-30">亲, 没有更多了</view>
+      <view wx:if="{{ !isLoading && !list.data.length }}">
+        <view class="no-content">
+          <text class="iconfont icon-meiyougengduo"></text>
+          <text class="cont">亲，您还没有订单信息哦！</text>
+          <navigator url="../../sharing/index/index">去开团</navigator>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 核销码弹出层 -->
+  <zan-popup show="{{ showQRCodePopup }}" bindclose="onToggleQRCodePopup">
+    <view class="pop-qrcode pop-example__container">
+      <view class="pop-title">
+        <text class="f-30">核销二维码</text>
+      </view>
+      <view class="pop-content">
+        <image src="{{ QRCodeImage }}"></image>
+      </view>
+    </view>
+  </zan-popup>
+
+  <!-- 支付方式弹窗 -->
+  <zan-popup show="{{ showPayPopup }}" bindclose="onTogglePayPopup">
+    <view class="pop-orderPay pop-example__container">
+      <view class="pop-title">
+        <text class="f-30">请选择支付方式</text>
+      </view>
+      <view class="pop-content">
+        <view class="pay-method">
+          <form bindsubmit="onSelectPayType" data-value="{{ PayTypeEnum.WECHAT.value }}" report-submit="true">
+            <button formType="submit" class="btn-normal">
+              <view class="pay-item dis-flex flex-x-between">
+                <view class="item-left dis-flex flex-y-center">
+                  <view class="item-left_icon wechat">
+                    <text class="iconfont icon-weixinzhifu"></text>
+                  </view>
+                  <view class="item-left_text">
+                    <text>{{ PayTypeEnum.WECHAT.name }}</text>
+                  </view>
+                </view>
+              </view>
+            </button>
+          </form>
+          <form bindsubmit="onSelectPayType" data-value="{{ PayTypeEnum.BALANCE.value }}" report-submit="true">
+            <button formType="submit" class="btn-normal">
+              <view class="pay-item dis-flex flex-x-between">
+                <view class="item-left dis-flex flex-y-center">
+                  <view class="item-left_icon balance">
+                    <text class="iconfont icon-qiandai"></text>
+                  </view>
+                  <view class="item-left_text">
+                    <text>{{ PayTypeEnum.BALANCE.name }}</text>
+                  </view>
+                </view>
+              </view>
+            </button>
+          </form>
+        </view>
+      </view>
+    </view>
+  </zan-popup>
+
+</view>

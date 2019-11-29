@@ -1,0 +1,1 @@
+const App = getApp(); Component({ options: { addGlobalClass: true, }, properties: { itemIndex: String, itemStyle: Object, params: Object }, methods: { _onServiceEvent(e) { App.saveFormId(e.detail.formId); wx.makePhoneCall({ phoneNumber: this.data.params.phone_num }) }, } })

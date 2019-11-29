@@ -1,0 +1,1 @@
+.diy-search{background:rgb(226,35,26);padding:2% 4% 2% 4%;font-size:26rpx;}.diy-search .inner{height:60rpx;background:#f1f1f1;overflow:hidden;}.diy-search .inner.radius{border-radius:10rpx;}.diy-search .inner.round{border-radius:45rpx;}.diy-search .inner .search-input{height:60rpx;line-height:60rpx;color:#666;padding:0 20rpx;}
