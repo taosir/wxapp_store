@@ -18,13 +18,13 @@
 - **好友砍价**<br>
 - **每日签到**<br><br>
 
-## 二、功能展示<br>
+## 二、扫码体验
+![wxapp_qrcode](https://github.com/taosir/wxapp_store/blob/master/_github_image/qrcode.jpg) <br>
+- 用微信扫描上图二维码体验.<br>
+
+## 三、功能展示<br>
 ![wxapp_home](https://github.com/taosir/wxapp_store/blob/master/_github_image/1_1.jpg) <br>
 - 更多图片展示可以在`_github_image`中查看.<br>
-
-## 三、实际体验
-![wxapp_qrcode](https://github.com/taosir/wxapp_store/blob/master/_github_image/share.jpg) <br>
-- 用微信扫描上图二维码体验.<br>
 
 ## 四、商业合作
 - **如果需要本小程序的全部前后端源码或者有商业合作需求，请联系QQ:365224772.**<br>
